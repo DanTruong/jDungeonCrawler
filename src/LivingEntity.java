@@ -48,6 +48,16 @@ public class LivingEntity {
     }
 
     /**
+     * Returns the name of the Living Entity object.
+     *
+     * @return String name of the Entity.
+     */
+    @Override
+    public String toString() {
+        return getName();
+    }
+
+    /**
      * String object to hold name of the Entity. Cannot be changed afterwards.
      */
     private final String name;

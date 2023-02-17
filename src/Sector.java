@@ -37,6 +37,7 @@ public class Sector {
      */
     public Sector(String name) {
         this.name = name;
+        this.population = new LivingEntity[7];
     }
 
     /**
@@ -49,8 +50,26 @@ public class Sector {
     }
 
     /**
+     * Returns the name of the Sector and the entities that reside in it.
+     *
+     * @return Name of the Sector and list of entity names.
+     */
+    @Override
+    public String toString() {
+        String listOfEntities = "";
+
+        for (LivingEntity population1 : this.population) {
+            listOfEntities += population1 + ", ";
+        }
+
+        return "Sector: " + getName() + "\nEntities: " + listOfEntities;
+    }
+
+    /**
      * String object to hold name of the Sector. Cannot be changed afterwards.
      */
     private final String name;
+
+    private LivingEntity[] population;
 
 }
