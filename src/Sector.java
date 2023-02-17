@@ -23,12 +23,34 @@
  */
 
 /**
+ * Class to define the physical sectors that Living Entity objects will reside
+ * in.
  *
  * @author Dan Truong
  */
 public class Sector {
 
-    public Sector() {
+    /**
+     * Creates new Sector object and gives it a name.
+     *
+     * @param name String to identify the Sector.
+     */
+    public Sector(String name) {
+        this.name = name;
     }
+
+    /**
+     * String method to return name of the Sector.
+     *
+     * @return Name of the Sector object.
+     */
+    public String getName() {
+        return this.name;
+    }
+
+    /**
+     * String object to hold name of the Sector. Cannot be changed afterwards.
+     */
+    private final String name;
 
 }

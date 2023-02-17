@@ -23,12 +23,33 @@
  */
 
 /**
+ * Class to define entity characters that will be populate the game world.
  *
  * @author Dan Truong
  */
 public class LivingEntity {
 
-    public LivingEntity() {
+    /**
+     * Creates new Entity object and gives it a name.
+     *
+     * @param name String to identify the Entity.
+     */
+    public LivingEntity(String name) {
+        this.name = name;
     }
+
+    /**
+     * String method to return name of the Entity.
+     *
+     * @return Name of the Entity.
+     */
+    public String getName() {
+        return this.name;
+    }
+
+    /**
+     * String object to hold name of the Entity. Cannot be changed afterwards.
+     */
+    private final String name;
 
 }
