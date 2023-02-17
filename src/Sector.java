@@ -38,6 +38,21 @@ public class Sector {
     public Sector(String name) {
         this.name = name;
         this.population = new LivingEntity[7];
+        this.populationCount = 0;
+    }
+
+    /**
+     * Method for adding Entities to the Sector.
+     *
+     * @param le Entity object being added to the Sector.
+     */
+    public void addEntity(LivingEntity le) {
+        if (populationCount < 7) {
+            le.setCurrentSector(this);
+            population[populationCount] = le;
+            populationCount++;
+        }
+
     }
 
     /**
@@ -70,6 +85,14 @@ public class Sector {
      */
     private final String name;
 
+    /**
+     * Array to hold Entity objects in the Sector.
+     */
     private LivingEntity[] population;
+
+    /**
+     * Number count to track how many Entities are in the Sector.
+     */
+    private int populationCount;
 
 }
