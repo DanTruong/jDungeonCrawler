@@ -39,6 +39,24 @@ public class LivingEntity {
     }
 
     /**
+     * Changes the Sector that the Entity will be going to.
+     *
+     * @param sector The sector that the Entity will be moving to.
+     */
+    public void setCurrentSector(Sector sector) {
+        this.currentSector = sector;
+    }
+
+    /**
+     * Gets the Sector that the Entity is currently located.
+     *
+     * @return Sector that the Entity is located in.
+     */
+    public Sector getCurrentSector() {
+        return this.currentSector;
+    }
+
+    /**
      * String method to return name of the Entity.
      *
      * @return Name of the Entity.
@@ -61,5 +79,10 @@ public class LivingEntity {
      * String object to hold name of the Entity. Cannot be changed afterwards.
      */
     private final String name;
+
+    /**
+     * Sector object to reference where the Entity is located.
+     */
+    private Sector currentSector;
 
 }
