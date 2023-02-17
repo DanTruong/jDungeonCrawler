@@ -23,13 +23,29 @@
  */
 
 /**
+ * Main class to start the game on.
  *
  * @author Dan Truong
  */
 public class Main {
 
     public static void main(String[] args) {
-        System.out.println("Hello World");
+        
+        Sector livingRoom = new Sector("Living Room"),
+                bedroom = new Sector("Bedroom");
+        
+        LivingEntity human = new LivingEntity("Danny"),
+                dog = new LivingEntity("Buster"),
+                cat = new LivingEntity("Muffles");
+        
+        livingRoom.addEntity(human);
+        livingRoom.addEntity(cat);
+        bedroom.addEntity(dog);
+
+        System.out.println(livingRoom);
+        System.out.println("");
+        System.out.println(bedroom);
+
     }
 
 }
