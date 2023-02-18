@@ -116,8 +116,9 @@ public class Sector {
     public String toString() {
         String listOfEntities = "";
 
-        for (LivingEntity population1 : this.population) {
-            listOfEntities += population1 + ", ";
+        for (int i = 0; i < populationCount; i++) {
+            listOfEntities += population[i] + " ("
+                    + population[i].getClass().getName() + "), ";
         }
 
         return "Sector: " + getName() + "\nEntities: " + listOfEntities;

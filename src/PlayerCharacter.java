@@ -23,35 +23,19 @@
  */
 
 /**
- * Main class to start the game on.
+ * Child class of LivingEntity. Used for handling Playable Character objects.
  *
  * @author Dan Truong
  */
-public class Main {
-    
-    public static void main(String[] args) {
-        
-        System.out.println("Hello World");
-        
-        Sector livingRoom = new Sector("Living Room"),
-                bedroom = new Sector("Bedroom");
-        
-        LivingEntity human = new PlayerCharacter("Danny"),
-                dog = new NonPlayableCharacter("Buster"),
-                cat = new NonPlayableCharacter("Muffles"),
-                evilRobot1 = new AdversarialCharacter("Evil Robot #1"),
-                evilRobot2 = new AdversarialCharacter("Evil Robot #2");
-        
-        livingRoom.addEntity(human);
-        livingRoom.addEntity(cat);
-        livingRoom.addEntity(evilRobot2);
-        bedroom.addEntity(dog);
-        bedroom.addEntity(evilRobot1);
-        
-        System.out.println(livingRoom);
-        System.out.println("");
-        System.out.println(bedroom);
-        
+public class PlayerCharacter extends LivingEntity {
+
+    /**
+     * Constructor for Player Character object.
+     *
+     * @param name Name to give to the Player.
+     */
+    public PlayerCharacter(String name) {
+        super(name);
     }
-    
+
 }

@@ -27,7 +27,7 @@
  *
  * @author Dan Truong
  */
-public class LivingEntity {
+public abstract class LivingEntity {
 
     /**
      * Creates new Entity object and gives it a name.
