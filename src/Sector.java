@@ -34,9 +34,13 @@ public class Sector {
      * Creates new Sector object and gives it a name.
      *
      * @param name String to identify the Sector.
+     * @param description Description of the Sector.
+     * @param temperature Initial state of the Sector's temperature.
      */
-    public Sector(String name) {
+    public Sector(String name, String description, String temperature) {
         this.name = name;
+        this.description = description;
+        this.temperature = temperature;
         this.population = new LivingEntity[7];
         this.populationCount = 0;
     }
@@ -108,6 +112,24 @@ public class Sector {
     }
 
     /**
+     * String method to return the description of the Sector.
+     *
+     * @return Description of the Sector object.
+     */
+    public String getDescription() {
+        return this.description;
+    }
+
+    /**
+     * String method to return the state of the Sector's temperature.
+     *
+     * @return Sector's current temperature.
+     */
+    public String getTemperature() {
+        return this.temperature;
+    }
+
+    /**
      * Returns the name of the Sector and the entities that reside in it.
      *
      * @return Name of the Sector and list of entity names.
@@ -121,13 +143,22 @@ public class Sector {
                     + population[i].getClass().getName() + "), ";
         }
 
-        return "Sector: " + getName() + "\nEntities: " + listOfEntities;
+        return "Sector: " + getName()
+                + ". " + getDescription()
+                + "\nCurrent Temperature: " + getTemperature()
+                + "\nEntities: " + listOfEntities;
     }
 
     /**
-     * String object to hold name of the Sector. Cannot be changed afterwards.
+     * String variables to hold the name and description of the Sector. Cannot
+     * be changed afterwards.
      */
-    private final String name;
+    private final String name, description;
+
+    /**
+     * String variable to hold the state of the Sector's temperature.
+     */
+    private String temperature;
 
     /**
      * Array to hold Entity objects in the Sector.

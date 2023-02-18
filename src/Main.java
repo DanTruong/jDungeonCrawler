@@ -28,30 +28,34 @@
  * @author Dan Truong
  */
 public class Main {
-    
+
     public static void main(String[] args) {
-        
+
         System.out.println("Hello World");
-        
-        Sector livingRoom = new Sector("Living Room"),
-                bedroom = new Sector("Bedroom");
-        
+
+        Sector livingRoom = new Sector("Living Room",
+                "A place to relax and watch TV",
+                "cold"),
+                bedroom = new Sector("Bedroom",
+                        "Where the player sleeps",
+                        "warm");
+
         LivingEntity human = new PlayerCharacter("Danny"),
                 dog = new NonPlayableCharacter("Buster"),
                 cat = new NonPlayableCharacter("Muffles"),
                 evilRobot1 = new AdversarialCharacter("Evil Robot #1"),
                 evilRobot2 = new AdversarialCharacter("Evil Robot #2");
-        
+
         livingRoom.addEntity(human);
         livingRoom.addEntity(cat);
         livingRoom.addEntity(evilRobot2);
         bedroom.addEntity(dog);
         bedroom.addEntity(evilRobot1);
-        
+
         System.out.println(livingRoom);
         System.out.println("");
         System.out.println(bedroom);
-        
+
     }
-    
+
 }
