@@ -56,6 +56,49 @@ public class Sector {
     }
 
     /**
+     * Sets the neighboring Sectors for the current Sector object.
+     *
+     * @param direction String of the direction to set the neighbor.
+     * @param sector Sector object to assign to the neighboring direction.
+     */
+    public void setNeighbor(String direction, Sector sector) {
+        switch (direction) {
+            case "N":
+                this.north = sector;
+                break;
+            case "E":
+                this.east = sector;
+                break;
+            case "S":
+                this.south = sector;
+                break;
+            default:
+                this.west = sector;
+                break;
+        }
+    }
+
+    /**
+     * Get the neighboring Sector, based on direction.
+     *
+     * @param direction String direction (N = North, E = East, S = South, W =
+     * West) to get neighbor from.
+     * @return Neighboring Sector that corresponds to the requested direction.
+     */
+    public Sector getNeighbor(String direction) {
+        return switch (direction) {
+            case "N" ->
+                this.north;
+            case "E" ->
+                this.east;
+            case "S" ->
+                this.south;
+            default ->
+                this.west;
+        };
+    }
+
+    /**
      * String method to return name of the Sector.
      *
      * @return Name of the Sector object.
@@ -94,5 +137,10 @@ public class Sector {
      * Number count to track how many Entities are in the Sector.
      */
     private int populationCount;
+
+    /**
+     * Neighboring Sector references.
+     */
+    private Sector north, east, south, west;
 
 }

@@ -31,6 +31,8 @@ public class Main {
 
     public static void main(String[] args) {
         
+        System.out.println("Hello World");
+        
         Sector livingRoom = new Sector("Living Room"),
                 bedroom = new Sector("Bedroom");
         
