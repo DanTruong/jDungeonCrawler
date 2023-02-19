@@ -35,9 +35,19 @@ public class AdversarialCharacter extends LivingEntity {
      * Constructor for the Adversarial Character object.
      *
      * @param name Name given to the Adversarial Character object.
+     * @param description Description of the Adversarial Character.
      */
-    public AdversarialCharacter(String name) {
-        super(name);
+    public AdversarialCharacter(String name, String description) {
+        super(name, description);
+    }
+
+    /**
+     * This character object likes Sectors that are hot. This method will
+     * increase the temperature of the Sector that the current Entity is in.
+     */
+    @Override
+    public void changeSectorTemperature() {
+        getCurrentSector().increaseTemperature();
     }
 
 }

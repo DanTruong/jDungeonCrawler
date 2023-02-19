@@ -33,9 +33,35 @@ public class PlayerCharacter extends LivingEntity {
      * Constructor for Player Character object.
      *
      * @param name Name to give to the Player.
+     * @param description Description of the Player.
      */
-    public PlayerCharacter(String name) {
-        super(name);
+    public PlayerCharacter(String name, String description) {
+        super(name, description);
+        this.health = 20;
     }
+
+    /**
+     * Gets the player's current health points.
+     *
+     * @return Current health of the player.
+     */
+    public int getHealth() {
+        return this.health;
+    }
+
+    /**
+     * This method is currently programmed to do nothing at the moment. This
+     * must exist because it is an abstract method for this object's parent
+     * class.
+     */
+    @Override
+    public void changeSectorTemperature() {
+        //Do nothing at the moment
+    }
+
+    /**
+     * Variable used to measure the player's health points.
+     */
+    private int health;
 
 }

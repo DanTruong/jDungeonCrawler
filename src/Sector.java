@@ -60,6 +60,38 @@ public class Sector {
     }
 
     /**
+     * Increases the temperature of the sector (if it's already hot, then the
+     * temperature will stay the same).
+     */
+    public void increaseTemperature() {
+        if (this.temperature.equalsIgnoreCase("cold")) {
+            this.temperature = "cool";
+        } else if (this.temperature.equalsIgnoreCase("cool")) {
+            this.temperature = "warm";
+        } else if (this.temperature.equalsIgnoreCase("warm")) {
+            this.temperature = "hot";
+        } else {
+            System.out.println("Sector already hot");
+        }
+    }
+
+    /**
+     * Decreases the temperature of the sector (if it's already cold, then the
+     * temperature will stay the same).
+     */
+    public void decreaseTemperature() {
+        if (this.temperature.equalsIgnoreCase("hot")) {
+            this.temperature = "warm";
+        } else if (this.temperature.equalsIgnoreCase("warm")) {
+            this.temperature = "cool";
+        } else if (this.temperature.equalsIgnoreCase("cool")) {
+            this.temperature = "cold";
+        } else {
+            System.out.println("Sector already cold");
+        }
+    }
+
+    /**
      * Sets the neighboring Sectors for the current Sector object.
      *
      * @param direction String of the direction to set the neighbor.

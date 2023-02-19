@@ -35,9 +35,19 @@ public class NonPlayableCharacter extends LivingEntity {
      * Constructor for Non Playable Character object.
      *
      * @param name Name given to the Non Playable Character object.
+     * @param description Description of the Non Playable Character.
      */
-    public NonPlayableCharacter(String name) {
-        super(name);
+    public NonPlayableCharacter(String name, String description) {
+        super(name, description);
+    }
+
+    /**
+     * This character object likes Sectors that are cold. This method will
+     * decrease the temperature of the Sector that the current Entity is in.
+     */
+    @Override
+    public void changeSectorTemperature() {
+        getCurrentSector().decreaseTemperature();
     }
 
 }

@@ -30,12 +30,14 @@
 public abstract class LivingEntity {
 
     /**
-     * Creates new Entity object and gives it a name.
+     * Creates new Entity object and gives it a name and description.
      *
      * @param name String to identify the Entity.
+     * @param description Description to give to the Entity.
      */
-    public LivingEntity(String name) {
+    public LivingEntity(String name, String description) {
         this.name = name;
+        this.description = description;
     }
 
     /**
@@ -66,6 +68,15 @@ public abstract class LivingEntity {
     }
 
     /**
+     * String method to return the description of the Entity.
+     *
+     * @return Description of the Entity.
+     */
+    public String getDescription() {
+        return this.description;
+    }
+
+    /**
      * Returns the name of the Living Entity object.
      *
      * @return String name of the Entity.
@@ -76,9 +87,15 @@ public abstract class LivingEntity {
     }
 
     /**
-     * String object to hold name of the Entity. Cannot be changed afterwards.
+     * Abstract method for all child classes to change Sector temperature.
      */
-    private final String name;
+    public abstract void changeSectorTemperature();
+
+    /**
+     * String variables to hold the name and description of the Entity. Cannot
+     * be changed afterwards.
+     */
+    private final String name, description;
 
     /**
      * Sector object to reference where the Entity is located.

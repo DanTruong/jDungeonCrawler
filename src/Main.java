@@ -40,11 +40,16 @@ public class Main {
                         "Where the player sleeps",
                         "warm");
 
-        LivingEntity human = new PlayerCharacter("Danny"),
-                dog = new NonPlayableCharacter("Buster"),
-                cat = new NonPlayableCharacter("Muffles"),
-                evilRobot1 = new AdversarialCharacter("Evil Robot #1"),
-                evilRobot2 = new AdversarialCharacter("Evil Robot #2");
+        LivingEntity human = new PlayerCharacter("Danny",
+                "The main player character. He pays the rent and "
+                + "enjoys watching TV."),
+                dog = new NonPlayableCharacter("Buster", "One of Danny's "
+                        + "pets. They enjoy belly rubs and head pats."),
+                cat = new NonPlayableCharacter("Muffles", "One of Danny's "
+                        + "pets. Enjoys being fed on time and meows when they "
+                        + "don't."),
+                evilRobot1 = new AdversarialCharacter("Evil Robot #1", "A broken vacuum that has gained sentience and makes loud noises."),
+                evilRobot2 = new AdversarialCharacter("Evil Robot #2", "A box fan that has a broken bearing and is very dusty.");
 
         livingRoom.addEntity(human);
         livingRoom.addEntity(cat);
