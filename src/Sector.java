@@ -60,16 +60,31 @@ public class Sector {
     }
 
     /**
+     * Alerts all Entities in the Sector of changes in the temperature state.
+     *
+     * @param action The action that was taken to change the Sector's
+     * temperature state.
+     */
+    private void notifyAllEntities(String action) {
+        for (int i = 0; i < this.populationCount; i++) {
+            this.population[i].react(action);
+        }
+    }
+
+    /**
      * Increases the temperature of the sector (if it's already hot, then the
      * temperature will stay the same).
      */
     public void increaseTemperature() {
         if (this.temperature.equalsIgnoreCase("cold")) {
             this.temperature = "cool";
+            notifyAllEntities("warming");
         } else if (this.temperature.equalsIgnoreCase("cool")) {
             this.temperature = "warm";
+            notifyAllEntities("warming");
         } else if (this.temperature.equalsIgnoreCase("warm")) {
             this.temperature = "hot";
+            notifyAllEntities("warming");
         } else {
             System.out.println("Sector already hot");
         }
@@ -82,10 +97,13 @@ public class Sector {
     public void decreaseTemperature() {
         if (this.temperature.equalsIgnoreCase("hot")) {
             this.temperature = "warm";
+            notifyAllEntities("cooling");
         } else if (this.temperature.equalsIgnoreCase("warm")) {
             this.temperature = "cool";
+            notifyAllEntities("cooling");
         } else if (this.temperature.equalsIgnoreCase("cool")) {
             this.temperature = "cold";
+            notifyAllEntities("cooling");
         } else {
             System.out.println("Sector already cold");
         }

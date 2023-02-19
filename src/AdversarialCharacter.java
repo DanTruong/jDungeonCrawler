@@ -50,4 +50,17 @@ public class AdversarialCharacter extends LivingEntity {
         getCurrentSector().increaseTemperature();
     }
 
+    /**
+     * Perform an action based on change of the Sector's temperature.
+     *
+     * @param action The action that was taken in the Sector.
+     */
+    @Override
+    public void react(String action) {
+        if (action.equals("cooling")) {
+            //TODO: Harm the player character
+            //TODO: Try to move to another Sector in a random direction
+        }
+    }
+
 }

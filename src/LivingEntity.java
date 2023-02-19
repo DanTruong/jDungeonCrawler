@@ -92,6 +92,13 @@ public abstract class LivingEntity {
     public abstract void changeSectorTemperature();
 
     /**
+     * Abstract method to trigger actions based on Sector temperature change.
+     *
+     * @param action
+     */
+    public abstract void react(String action);
+
+    /**
      * String variables to hold the name and description of the Entity. Cannot
      * be changed afterwards.
      */

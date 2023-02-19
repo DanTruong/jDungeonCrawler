@@ -48,8 +48,12 @@ public class Main {
                 cat = new NonPlayableCharacter("Muffles", "One of Danny's "
                         + "pets. Enjoys being fed on time and meows when they "
                         + "don't."),
-                evilRobot1 = new AdversarialCharacter("Evil Robot #1", "A broken vacuum that has gained sentience and makes loud noises."),
-                evilRobot2 = new AdversarialCharacter("Evil Robot #2", "A box fan that has a broken bearing and is very dusty.");
+                evilRobot1 = new AdversarialCharacter("Evil Robot #1", 
+                        "A broken vacuum that has gained sentience and "
+                                + "makes loud noises."),
+                evilRobot2 = new AdversarialCharacter("Evil Robot #2", 
+                        "A box fan that has a broken bearing and is "
+                                + "very dusty.");
 
         livingRoom.addEntity(human);
         livingRoom.addEntity(cat);

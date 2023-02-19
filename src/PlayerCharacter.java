@@ -60,6 +60,18 @@ public class PlayerCharacter extends LivingEntity {
     }
 
     /**
+     * This method is currently programmed to do nothing at the moment. This
+     * must exist because it is an abstract method for this object's parent
+     * class.
+     *
+     * @param action N/A
+     */
+    @Override
+    public void react(String action) {
+        //Do nothing at the moment
+    }
+
+    /**
      * Variable used to measure the player's health points.
      */
     private int health;
