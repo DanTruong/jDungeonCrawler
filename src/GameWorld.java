@@ -35,14 +35,42 @@ public class GameWorld extends DefaultHandler {
     public GameWorld() {
     }
 
+    private void createEntity(String qName, String name, String description) {
+        System.out.println("Adding \"" + qName + "\" with name \""
+                + name + "\"");
+        //TODO: Add conditional to deliniate between Entity objects
+        //TODO: Create Entity object and add to Sector
+    }
+
+    private void createSector(String name, String description, String state) {
+        System.out.println("Creating Sector \"" + name
+                + "\" with initial state of \"" + state + "\"");
+        //TODO: Create Sector object
+        //TODO: Add neighbor references to Sector
+        //TODO: Add Sector to list of Sectors
+    }
+
+    /**
+     *
+     * @param uri
+     * @param localName
+     * @param qName
+     * @param attr
+     */
     public void startElement(String uri, String localName, String qName,
             Attributes attr) {
         switch (qName) {
             case "sector":
+                createSector(attr.getValue("name"),
+                        attr.getValue("description"),
+                        attr.getValue("state"));
                 break;
             case "AdversarialCharacter":
             case "NonPlayableCharacter":
             case "PlayerCharacter":
+                createEntity(qName,
+                        attr.getValue("name"),
+                        attr.getValue("description"));
                 break;
         }
     }
