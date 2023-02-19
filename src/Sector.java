@@ -34,9 +34,13 @@ public class Sector {
      * Creates new Sector object and gives it a name.
      *
      * @param name String to identify the Sector.
+     * @param description Description of the Sector.
+     * @param temperature Initial state of the Sector's temperature.
      */
-    public Sector(String name) {
+    public Sector(String name, String description, String temperature) {
         this.name = name;
+        this.description = description;
+        this.temperature = temperature;
         this.population = new LivingEntity[7];
         this.populationCount = 0;
     }
@@ -56,12 +60,123 @@ public class Sector {
     }
 
     /**
+     * Alerts all Entities in the Sector of changes in the temperature state.
+     *
+     * @param action The action that was taken to change the Sector's
+     * temperature state.
+     */
+    private void notifyAllEntities(String action) {
+        for (int i = 0; i < this.populationCount; i++) {
+            this.population[i].react(action);
+        }
+    }
+
+    /**
+     * Increases the temperature of the sector (if it's already hot, then the
+     * temperature will stay the same).
+     */
+    public void increaseTemperature() {
+        if (this.temperature.equalsIgnoreCase("cold")) {
+            this.temperature = "cool";
+            notifyAllEntities("warming");
+        } else if (this.temperature.equalsIgnoreCase("cool")) {
+            this.temperature = "warm";
+            notifyAllEntities("warming");
+        } else if (this.temperature.equalsIgnoreCase("warm")) {
+            this.temperature = "hot";
+            notifyAllEntities("warming");
+        } else {
+            System.out.println("Sector already hot");
+        }
+    }
+
+    /**
+     * Decreases the temperature of the sector (if it's already cold, then the
+     * temperature will stay the same).
+     */
+    public void decreaseTemperature() {
+        if (this.temperature.equalsIgnoreCase("hot")) {
+            this.temperature = "warm";
+            notifyAllEntities("cooling");
+        } else if (this.temperature.equalsIgnoreCase("warm")) {
+            this.temperature = "cool";
+            notifyAllEntities("cooling");
+        } else if (this.temperature.equalsIgnoreCase("cool")) {
+            this.temperature = "cold";
+            notifyAllEntities("cooling");
+        } else {
+            System.out.println("Sector already cold");
+        }
+    }
+
+    /**
+     * Sets the neighboring Sectors for the current Sector object.
+     *
+     * @param direction String of the direction to set the neighbor.
+     * @param sector Sector object to assign to the neighboring direction.
+     */
+    public void setNeighbor(String direction, Sector sector) {
+        switch (direction) {
+            case "N":
+                this.north = sector;
+                break;
+            case "E":
+                this.east = sector;
+                break;
+            case "S":
+                this.south = sector;
+                break;
+            default:
+                this.west = sector;
+                break;
+        }
+    }
+
+    /**
+     * Get the neighboring Sector, based on direction.
+     *
+     * @param direction String direction (N = North, E = East, S = South, W =
+     * West) to get neighbor from.
+     * @return Neighboring Sector that corresponds to the requested direction.
+     */
+    public Sector getNeighbor(String direction) {
+        return switch (direction) {
+            case "N" ->
+                this.north;
+            case "E" ->
+                this.east;
+            case "S" ->
+                this.south;
+            default ->
+                this.west;
+        };
+    }
+
+    /**
      * String method to return name of the Sector.
      *
      * @return Name of the Sector object.
      */
     public String getName() {
         return this.name;
+    }
+
+    /**
+     * String method to return the description of the Sector.
+     *
+     * @return Description of the Sector object.
+     */
+    public String getDescription() {
+        return this.description;
+    }
+
+    /**
+     * String method to return the state of the Sector's temperature.
+     *
+     * @return Sector's current temperature.
+     */
+    public String getTemperature() {
+        return this.temperature;
     }
 
     /**
@@ -73,17 +188,27 @@ public class Sector {
     public String toString() {
         String listOfEntities = "";
 
-        for (LivingEntity population1 : this.population) {
-            listOfEntities += population1 + ", ";
+        for (int i = 0; i < populationCount; i++) {
+            listOfEntities += population[i] + " ("
+                    + population[i].getClass().getName() + "), ";
         }
 
-        return "Sector: " + getName() + "\nEntities: " + listOfEntities;
+        return "Sector: " + getName()
+                + ". " + getDescription()
+                + "\nCurrent Temperature: " + getTemperature()
+                + "\nEntities: " + listOfEntities;
     }
 
     /**
-     * String object to hold name of the Sector. Cannot be changed afterwards.
+     * String variables to hold the name and description of the Sector. Cannot
+     * be changed afterwards.
      */
-    private final String name;
+    private final String name, description;
+
+    /**
+     * String variable to hold the state of the Sector's temperature.
+     */
+    private String temperature;
 
     /**
      * Array to hold Entity objects in the Sector.
@@ -94,5 +219,10 @@ public class Sector {
      * Number count to track how many Entities are in the Sector.
      */
     private int populationCount;
+
+    /**
+     * Neighboring Sector references.
+     */
+    private Sector north, east, south, west;
 
 }

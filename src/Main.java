@@ -30,17 +30,36 @@
 public class Main {
 
     public static void main(String[] args) {
-        
-        Sector livingRoom = new Sector("Living Room"),
-                bedroom = new Sector("Bedroom");
-        
-        LivingEntity human = new LivingEntity("Danny"),
-                dog = new LivingEntity("Buster"),
-                cat = new LivingEntity("Muffles");
-        
+
+        System.out.println("Hello World");
+
+        Sector livingRoom = new Sector("Living Room",
+                "A place to relax and watch TV",
+                "cold"),
+                bedroom = new Sector("Bedroom",
+                        "Where the player sleeps",
+                        "warm");
+
+        LivingEntity human = new PlayerCharacter("Danny",
+                "The main player character. He pays the rent and "
+                + "enjoys watching TV."),
+                dog = new NonPlayableCharacter("Buster", "One of Danny's "
+                        + "pets. They enjoy belly rubs and head pats."),
+                cat = new NonPlayableCharacter("Muffles", "One of Danny's "
+                        + "pets. Enjoys being fed on time and meows when they "
+                        + "don't."),
+                evilRobot1 = new AdversarialCharacter("Evil Robot #1", 
+                        "A broken vacuum that has gained sentience and "
+                                + "makes loud noises."),
+                evilRobot2 = new AdversarialCharacter("Evil Robot #2", 
+                        "A box fan that has a broken bearing and is "
+                                + "very dusty.");
+
         livingRoom.addEntity(human);
         livingRoom.addEntity(cat);
+        livingRoom.addEntity(evilRobot2);
         bedroom.addEntity(dog);
+        bedroom.addEntity(evilRobot1);
 
         System.out.println(livingRoom);
         System.out.println("");
