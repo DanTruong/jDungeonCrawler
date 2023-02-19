@@ -27,43 +27,34 @@
  *
  * @author Dan Truong
  */
+import java.io.IOException;
+import java.util.Scanner;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+import org.xml.sax.SAXException;
+
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SAXException,
+            ParserConfigurationException {
 
-        System.out.println("Hello World");
+        Scanner input = new Scanner(System.in);
+        GameWorld gw = new GameWorld();
 
-        Sector livingRoom = new Sector("Living Room",
-                "A place to relax and watch TV",
-                "cold"),
-                bedroom = new Sector("Bedroom",
-                        "Where the player sleeps",
-                        "warm");
+        System.out.print("Type in the name of the game input file > ");
+        String xmlFile = input.nextLine();
 
-        LivingEntity human = new PlayerCharacter("Danny",
-                "The main player character. He pays the rent and "
-                + "enjoys watching TV."),
-                dog = new NonPlayableCharacter("Buster", "One of Danny's "
-                        + "pets. They enjoy belly rubs and head pats."),
-                cat = new NonPlayableCharacter("Muffles", "One of Danny's "
-                        + "pets. Enjoys being fed on time and meows when they "
-                        + "don't."),
-                evilRobot1 = new AdversarialCharacter("Evil Robot #1", 
-                        "A broken vacuum that has gained sentience and "
-                                + "makes loud noises."),
-                evilRobot2 = new AdversarialCharacter("Evil Robot #2", 
-                        "A box fan that has a broken bearing and is "
-                                + "very dusty.");
+        try {
+            SAXParserFactory spf = SAXParserFactory.newInstance();
+            SAXParser sp = spf.newSAXParser();
+            System.out.println("Loading " + xmlFile + "...");
+            sp.parse(xmlFile, gw);
+        } catch (IOException ioe) {
+            System.out.println("Error! File not found.");
+        }
 
-        livingRoom.addEntity(human);
-        livingRoom.addEntity(cat);
-        livingRoom.addEntity(evilRobot2);
-        bedroom.addEntity(dog);
-        bedroom.addEntity(evilRobot1);
-
-        System.out.println(livingRoom);
-        System.out.println("");
-        System.out.println(bedroom);
+        System.out.println("Goodbye!");
 
     }
 
