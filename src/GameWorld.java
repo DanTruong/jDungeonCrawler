@@ -32,7 +32,11 @@ import org.xml.sax.*;
 
 public class GameWorld extends DefaultHandler {
 
+    
     public GameWorld() {
+        sector = null;
+        sectorArray = new Sector[99];
+        sectorIndex = 0;
     }
 
     private void createEntity(String qName, String name, String description) {
@@ -43,11 +47,36 @@ public class GameWorld extends DefaultHandler {
     }
 
     private void createSector(String name, String description, String state) {
-        System.out.println("Creating Sector \"" + name
-                + "\" with initial state of \"" + state + "\"");
-        //TODO: Create Sector object
+        sector = new Sector(name, description, state);
         //TODO: Add neighbor references to Sector
-        //TODO: Add Sector to list of Sectors
+        sectorArray[sectorIndex] = sector;
+        sectorIndex++;
+        executeSort(0, sectorIndex - 1);
+    }
+
+    private void executeSort(int low, int high) {
+        int qsLow = low, qsHigh = high, pivot = low + (high - low) / 2;
+        while (qsLow <= qsHigh) {
+            while(sectorArray[qsLow].getName().compareTo(sectorArray[pivot].getName()) < 0){
+                qsLow++;
+            }
+            while(sectorArray[qsHigh].getName().compareTo(sectorArray[pivot].getName()) > 0){
+                qsHigh--;
+            }
+            if(qsLow <= qsHigh){
+                Sector temp = sectorArray[qsLow];
+                sectorArray[qsLow] = sectorArray[qsHigh];
+                sectorArray[qsHigh] = temp;
+                qsLow++;
+                qsHigh--;
+            }
+        }
+        if (low < qsHigh) {
+            executeSort(low, qsHigh);
+        }
+        if (qsLow < high) {
+            executeSort(qsLow, high);
+        }
     }
 
     /**
@@ -74,5 +103,13 @@ public class GameWorld extends DefaultHandler {
                 break;
         }
     }
+
+    private Sector[] sectorArray;
+    private int sectorIndex;
+
+    /**
+     * The current Sector being created.
+     */
+    private Sector sector;
 
 }
