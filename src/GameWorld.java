@@ -42,7 +42,6 @@ public class GameWorld extends DefaultHandler {
         if (inputQuery.equalsIgnoreCase("list")) {
             for (int i = 0; i < sectorIndex; i++) {
                 System.out.println("Sector: " + sectorArray[i].getName());
-
             }
         } else {
             int low = 0, high = sectorIndex - 1;
@@ -56,8 +55,10 @@ public class GameWorld extends DefaultHandler {
             }
             if (sectorArray[low].getName().equalsIgnoreCase(inputQuery)) {
                 System.out.println("Found Sector: " + sectorArray[low].getName());
+                System.out.println(sectorArray[low].toString());
             } else if (sectorArray[high].getName().equalsIgnoreCase(inputQuery)) {
                 System.out.println("Found Sector: " + sectorArray[high].getName());
+                System.out.println(sectorArray[high].toString());
             } else {
                 System.out.println("\"" + inputQuery + "\" does not exist");
             }
@@ -66,8 +67,20 @@ public class GameWorld extends DefaultHandler {
     }
 
     private void createEntity(String qName, String name, String description) {
-        //TODO: Add conditional to deliniate between Entity objects
-        //TODO: Create Entity object and add to Sector
+        LivingEntity entity = null;
+        switch (qName) {
+            case "PlayerCharacter":
+                entity = new PlayerCharacter(name, description);
+                this.player = (PlayerCharacter) entity;
+                break;
+            case "AdversarialCharacter":
+                entity = new AdversarialCharacter(name, description);
+                break;
+            default:
+                entity = new NonPlayableCharacter(name, description);
+                break;
+        }
+        sector.addEntity(entity);
     }
 
     private void createSector(String name, String description, String state) {
@@ -128,8 +141,13 @@ public class GameWorld extends DefaultHandler {
         }
     }
 
+    public PlayerCharacter getPlayer() {
+        return player;
+    }
+
     private Sector[] sectorArray;
     private int sectorIndex;
+    private PlayerCharacter player;
 
     /**
      * The current Sector being created.
