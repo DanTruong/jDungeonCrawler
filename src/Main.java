@@ -43,7 +43,7 @@ public class Main {
         GameWorld gw = new GameWorld();
 
         System.out.print("Type in the name of the game input file > ");
-        String xmlFile = input.nextLine();
+        String xmlFile = input.nextLine(), userInput = "";
 
         try {
             SAXParserFactory spf = SAXParserFactory.newInstance();
@@ -53,7 +53,13 @@ public class Main {
         } catch (IOException ioe) {
             System.out.println("Error! File not found.");
         }
-        
+
+        while (!userInput.equalsIgnoreCase("exit")) {
+            System.out.print("Type in a room name > ");
+            userInput = input.nextLine();
+            gw.searchSector(userInput);
+        }
+
         System.out.println("Goodbye!");
 
     }

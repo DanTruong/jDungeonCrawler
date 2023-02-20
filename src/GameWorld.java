@@ -32,16 +32,40 @@ import org.xml.sax.*;
 
 public class GameWorld extends DefaultHandler {
 
-    
     public GameWorld() {
         sector = null;
         sectorArray = new Sector[99];
         sectorIndex = 0;
     }
 
+    public void searchSector(String inputQuery) {
+        if (inputQuery.equalsIgnoreCase("list")) {
+            for (int i = 0; i < sectorIndex; i++) {
+                System.out.println("Sector: " + sectorArray[i].getName());
+
+            }
+        } else {
+            int low = 0, high = sectorIndex - 1;
+            while (high - low > 1) {
+                int middle = (high + low) / 2;
+                if (sectorArray[middle].getName().compareToIgnoreCase(inputQuery) < 0) {
+                    low = middle + 1;
+                } else {
+                    high = middle;
+                }
+            }
+            if (sectorArray[low].getName().equalsIgnoreCase(inputQuery)) {
+                System.out.println("Found Sector: " + sectorArray[low].getName());
+            } else if (sectorArray[high].getName().equalsIgnoreCase(inputQuery)) {
+                System.out.println("Found Sector: " + sectorArray[high].getName());
+            } else {
+                System.out.println("\"" + inputQuery + "\" does not exist");
+            }
+        }
+
+    }
+
     private void createEntity(String qName, String name, String description) {
-        System.out.println("Adding \"" + qName + "\" with name \""
-                + name + "\"");
         //TODO: Add conditional to deliniate between Entity objects
         //TODO: Create Entity object and add to Sector
     }
@@ -57,13 +81,13 @@ public class GameWorld extends DefaultHandler {
     private void executeSort(int low, int high) {
         int qsLow = low, qsHigh = high, pivot = low + (high - low) / 2;
         while (qsLow <= qsHigh) {
-            while(sectorArray[qsLow].getName().compareTo(sectorArray[pivot].getName()) < 0){
+            while (sectorArray[qsLow].getName().compareTo(sectorArray[pivot].getName()) < 0) {
                 qsLow++;
             }
-            while(sectorArray[qsHigh].getName().compareTo(sectorArray[pivot].getName()) > 0){
+            while (sectorArray[qsHigh].getName().compareTo(sectorArray[pivot].getName()) > 0) {
                 qsHigh--;
             }
-            if(qsLow <= qsHigh){
+            if (qsLow <= qsHigh) {
                 Sector temp = sectorArray[qsLow];
                 sectorArray[qsLow] = sectorArray[qsHigh];
                 sectorArray[qsHigh] = temp;
