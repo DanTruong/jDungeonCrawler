@@ -1,0 +1,18 @@
+<xml version="1.0" encoding="UTF-8">
+	<sector name="Bathroom" description="The bathroom that is attached to the Main Bedroom." state="cold" east="Main Bedroom"></sector>
+	<sector name="Main Bedroom" description="Where the player and their pets like to sleep." state="warm" south="Living Room" west="Bathroom">
+		<NonPlayableCharacter name="Muffles the cat" description="One of Danny's pets. Enjoys being fed on time and meows when they don't." />
+		<AdversarialCharacter name="Evil Robot #1" description="A broken vacuum that has gained sentience and makes loud noises." />
+	</sector>
+	<sector name="Kitchen" description="A place to make meals and rack up all sorts of dishes." state="cool" east="Living Room">
+		<PlayerCharacter name="Danny" description="The main player character. He pays the rent and enjoys watching TV." />
+	</sector>
+	<sector name="Living Room" description="The player and the pets like to watch TV in here." state="hot" north="Main Bedroom" east="Junior Bedroom" south="Mudroom" west="Kitchen">
+		<NonPlayableCharacter name="Buster the dog" description="One of Danny's pets. They enjoy belly rubs and head pats." />
+	</sector>
+	<sector name="Junior Bedroom" description="Guests normally stay in this room." state="cool" west="Living Room">
+		<AdversarialCharacter name="Evil Robot #2" description="A box fan that has a broken bearing and is very dusty." />
+	</sector>
+	<sector name="Garage" description="Cars, tools and rodents like to reside in here." state="cold" east="Mudroom"></sector>
+	<sector name="Mudroom" description="A place for boots and coats to stay." state="warm" north="Living Room" west="Garage"></sector>
+</xml>

@@ -37,12 +37,17 @@ public class Sector {
      * @param description Description of the Sector.
      * @param temperature Initial state of the Sector's temperature.
      */
-    public Sector(String name, String description, String temperature) {
+    public Sector(String name, String description, String temperature,
+            String[] neighbors) {
         this.name = name;
         this.description = description;
         this.temperature = temperature;
         this.population = new LivingEntity[7];
         this.populationCount = 0;
+        northRef = neighbors[0];
+        eastRef = neighbors[1];
+        southRef = neighbors[2];
+        westRef = neighbors[3];
     }
 
     /**
@@ -196,6 +201,10 @@ public class Sector {
         return "Sector: " + getName()
                 + ". " + getDescription()
                 + "\nCurrent Temperature: " + getTemperature()
+                + "\nNorth: " + this.northRef
+                + "\nEast: " + this.eastRef
+                + "\nSouth: " + this.southRef
+                + "\nWest: " + this.westRef
                 + "\nEntities: " + listOfEntities;
     }
 
@@ -224,5 +233,10 @@ public class Sector {
      * Neighboring Sector references.
      */
     private Sector north, east, south, west;
+
+    /**
+     * String names of the neighboring Sectors.
+     */
+    private String northRef, eastRef, southRef, westRef;
 
 }
