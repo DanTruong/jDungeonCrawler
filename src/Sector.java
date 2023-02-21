@@ -234,6 +234,9 @@ public class Sector {
      */
     private Sector north, east, south, west;
 
+    /**
+     * String names of the neighboring Sectors.
+     */
     private String northRef, eastRef, southRef, westRef;
 
 }

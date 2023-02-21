@@ -32,12 +32,21 @@ import org.xml.sax.*;
 
 public class GameWorld extends DefaultHandler {
 
+    /**
+     * Default constructor for the GameWorld.
+     */
     public GameWorld() {
         sector = null;
         sectorArray = new Sector[99];
         sectorIndex = 0;
     }
 
+    /**
+     * Search for Sector based on user's string input. Utilizes Binary Search to
+     * locate Sectors.
+     *
+     * @param inputQuery String of the Sector's name to search for.
+     */
     public void searchSector(String inputQuery) {
         if (inputQuery.equalsIgnoreCase("list")) {
             for (int i = 0; i < sectorIndex; i++) {
@@ -66,6 +75,13 @@ public class GameWorld extends DefaultHandler {
 
     }
 
+    /**
+     * Creates Entity object and adds it to the current Sector object.
+     *
+     * @param qName Class of Entity to create.
+     * @param name Name of the Entity.
+     * @param description Description of the Entity.
+     */
     private void createEntity(String qName, String name, String description) {
         LivingEntity entity = null;
         switch (qName) {
@@ -83,6 +99,15 @@ public class GameWorld extends DefaultHandler {
         sector.addEntity(entity);
     }
 
+    /**
+     * Creates Sector object, add it to Sector array and sort the array
+     * afterwards.
+     *
+     * @param name Name of the Sector.
+     * @param description Description of the Sector.
+     * @param state Initial temperature state of the Sector.
+     * @param neighbors Directional references to neighboring Sectors.
+     */
     private void createSector(String name, String description, String state,
             String[] neighbors) {
         sector = new Sector(name, description, state, neighbors);
@@ -91,6 +116,13 @@ public class GameWorld extends DefaultHandler {
         executeSort(0, sectorIndex - 1);
     }
 
+    /**
+     * Executes quicksort sorting algorithm on the Sector array for easier
+     * searching.
+     *
+     * @param low Left-most index of the array.
+     * @param high Right-most index of the array.
+     */
     private void executeSort(int low, int high) {
         int qsLow = low, qsHigh = high, pivot = low + (high - low) / 2;
         while (qsLow <= qsHigh) {
@@ -117,12 +149,15 @@ public class GameWorld extends DefaultHandler {
     }
 
     /**
+     * Overrides default SAXParser startElement method to read in game world
+     * elements.
      *
      * @param uri
      * @param localName
      * @param qName
      * @param attr
      */
+    @Override
     public void startElement(String uri, String localName, String qName,
             Attributes attr) {
         switch (qName) {
@@ -147,12 +182,28 @@ public class GameWorld extends DefaultHandler {
         }
     }
 
+    /**
+     * Returns the player character that is generated for this game.
+     *
+     * @return The player character object.
+     */
     public PlayerCharacter getPlayer() {
         return player;
     }
 
+    /**
+     * Used for holding the Sectors in the Game World.
+     */
     private Sector[] sectorArray;
+
+    /**
+     * To keep track of Sectors in the Sector array.
+     */
     private int sectorIndex;
+
+    /**
+     * Player character being created for the game session.
+     */
     private PlayerCharacter player;
 
     /**
