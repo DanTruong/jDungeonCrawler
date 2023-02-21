@@ -83,9 +83,9 @@ public class GameWorld extends DefaultHandler {
         sector.addEntity(entity);
     }
 
-    private void createSector(String name, String description, String state) {
-        sector = new Sector(name, description, state);
-        //TODO: Add neighbor references to Sector
+    private void createSector(String name, String description, String state,
+            String[] neighbors) {
+        sector = new Sector(name, description, state, neighbors);
         sectorArray[sectorIndex] = sector;
         sectorIndex++;
         executeSort(0, sectorIndex - 1);
@@ -129,7 +129,13 @@ public class GameWorld extends DefaultHandler {
             case "sector":
                 createSector(attr.getValue("name"),
                         attr.getValue("description"),
-                        attr.getValue("state"));
+                        attr.getValue("state"),
+                        new String[]{
+                            attr.getValue("north"),
+                            attr.getValue("east"),
+                            attr.getValue("south"),
+                            attr.getValue("west")
+                        });
                 break;
             case "AdversarialCharacter":
             case "NonPlayableCharacter":
