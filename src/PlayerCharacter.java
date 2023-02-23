@@ -1,3 +1,4 @@
+
 /*
  * The MIT License
  *
@@ -21,12 +22,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
 /**
  * Child class of LivingEntity. Used for handling Playable Character objects.
  *
  * @author Dan Truong
  */
+import java.util.Scanner;
+
 public class PlayerCharacter extends LivingEntity {
 
     /**
@@ -69,6 +71,16 @@ public class PlayerCharacter extends LivingEntity {
     @Override
     public void react(String action) {
         //Do nothing at the moment
+    }
+
+    public void gameLoop(Scanner sc) {
+        System.out.print("Type in a command > ");
+        String userInput = sc.nextLine();
+        while (!userInput.equalsIgnoreCase("exit")) {
+            System.out.print("Type in a command > ");
+            userInput = sc.nextLine();
+            System.out.println("You typed in: " + userInput);
+        }
     }
 
     /**
