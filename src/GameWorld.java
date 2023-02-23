@@ -42,35 +42,27 @@ public class GameWorld extends DefaultHandler {
     }
 
     /**
-     * Search for Sector based on user's string input. Utilizes Binary Search to
-     * locate Sectors.
-     *
-     * @param inputQuery String of the Sector's name to search for.
+     * Return Sector based on string input.
+     * 
+     * @param sectorName Name of the Sector to search for.
+     * @return Sector (based on String name).
      */
-    public void searchSector(String inputQuery) {
-        if (inputQuery.equalsIgnoreCase("list")) {
-            for (int i = 0; i < sectorIndex; i++) {
-                System.out.println("Sector: " + sectorArray[i].getName());
-            }
-        } else {
-            int low = 0, high = sectorIndex - 1;
-            while (high - low > 1) {
-                int middle = (high + low) / 2;
-                if (sectorArray[middle].getName().compareToIgnoreCase(inputQuery) < 0) {
-                    low = middle + 1;
-                } else {
-                    high = middle;
-                }
-            }
-            if (sectorArray[low].getName().equalsIgnoreCase(inputQuery)) {
-                System.out.println("Found Sector: " + sectorArray[low].getName());
-                System.out.println(sectorArray[low].toString());
-            } else if (sectorArray[high].getName().equalsIgnoreCase(inputQuery)) {
-                System.out.println("Found Sector: " + sectorArray[high].getName());
-                System.out.println(sectorArray[high].toString());
+    public Sector getSector(String sectorName) {
+        int low = 0, high = sectorIndex - 1;
+        while (high - low > 1) {
+            int middle = (high + low) / 2;
+            if (sectorArray[middle].getName().compareToIgnoreCase(sectorName) < 0) {
+                low = middle + 1;
             } else {
-                System.out.println("\"" + inputQuery + "\" does not exist");
+                high = middle;
             }
+        }
+        if (sectorArray[low].getName().equalsIgnoreCase(sectorName)) {
+            return sectorArray[low];
+        } else if (sectorArray[high].getName().equalsIgnoreCase(sectorName)) {
+            return sectorArray[high];
+        } else {
+            return null;
         }
 
     }
