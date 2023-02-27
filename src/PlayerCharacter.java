@@ -111,7 +111,7 @@ public class PlayerCharacter extends LivingEntity {
                 case "help" ->
                     displayHelp();
                 case "look" ->
-                    System.out.println("INSERT INFO ABOUT ROOM HERE");
+                    System.out.println(getCurrentSector());
                 case "warm", "cool" ->
                     System.out.println("INSERT ACTIONS HERE TO CHANGE SECTOR TEMP");
                 case "north", "east", "south", "west" ->
