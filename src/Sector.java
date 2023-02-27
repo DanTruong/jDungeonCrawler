@@ -36,18 +36,21 @@ public class Sector {
      * @param name String to identify the Sector.
      * @param description Description of the Sector.
      * @param temperature Initial state of the Sector's temperature.
+     * @param neighbors References to neighboring Sector's names.
+     * @param gw GameWorld object linked to the Sector.
      */
     public Sector(String name, String description, String temperature,
-            String[] neighbors) {
+            String[] neighbors, GameWorld gw) {
         this.name = name;
         this.description = description;
         this.temperature = temperature;
         this.population = new LivingEntity[7];
         this.populationCount = 0;
-        northRef = neighbors[0];
-        eastRef = neighbors[1];
-        southRef = neighbors[2];
-        westRef = neighbors[3];
+        this.northRef = neighbors[0];
+        this.eastRef = neighbors[1];
+        this.southRef = neighbors[2];
+        this.westRef = neighbors[3];
+        this.activeGameWorld = gw;
     }
 
     /**
@@ -115,29 +118,6 @@ public class Sector {
     }
 
     /**
-     * Sets the neighboring Sectors for the current Sector object.
-     *
-     * @param direction String of the direction to set the neighbor.
-     * @param sector Sector object to assign to the neighboring direction.
-     */
-    public void setNeighbor(String direction, Sector sector) {
-        switch (direction) {
-            case "N":
-                this.north = sector;
-                break;
-            case "E":
-                this.east = sector;
-                break;
-            case "S":
-                this.south = sector;
-                break;
-            default:
-                this.west = sector;
-                break;
-        }
-    }
-
-    /**
      * Get the neighboring Sector, based on direction.
      *
      * @param direction String direction (N = North, E = East, S = South, W =
@@ -147,13 +127,13 @@ public class Sector {
     public Sector getNeighbor(String direction) {
         return switch (direction) {
             case "N" ->
-                this.north;
+                this.activeGameWorld.getSector(northRef);
             case "E" ->
-                this.east;
+                this.activeGameWorld.getSector(eastRef);
             case "S" ->
-                this.south;
+                this.activeGameWorld.getSector(southRef);
             default ->
-                this.west;
+                this.activeGameWorld.getSector(westRef);
         };
     }
 
@@ -191,20 +171,34 @@ public class Sector {
      */
     @Override
     public String toString() {
-        String listOfEntities = "";
+        String listOfEntities = "", neighbors = "";
 
         for (int i = 0; i < populationCount; i++) {
             listOfEntities += population[i] + " ("
                     + population[i].getClass().getName() + "), ";
         }
 
+        try {
+            neighbors += "\nNorth: " + getNeighbor("N").getName();
+        } catch (NullPointerException npe) {
+        }
+        try {
+            neighbors += "\nEast: " + getNeighbor("E").getName();
+        } catch (NullPointerException npe) {
+        }
+        try {
+            neighbors += "\nSouth: " + getNeighbor("S").getName();
+        } catch (NullPointerException npe) {
+        }
+        try {
+            neighbors += "\nWest: " + getNeighbor("W").getName();
+        } catch (NullPointerException npe) {
+        }
+
         return "Sector: " + getName()
                 + ". " + getDescription()
                 + "\nCurrent Temperature: " + getTemperature()
-                + "\nNorth: " + this.northRef
-                + "\nEast: " + this.eastRef
-                + "\nSouth: " + this.southRef
-                + "\nWest: " + this.westRef
+                + neighbors
                 + "\nEntities: " + listOfEntities;
     }
 
@@ -230,13 +224,13 @@ public class Sector {
     private int populationCount;
 
     /**
-     * Neighboring Sector references.
-     */
-    private Sector north, east, south, west;
-
-    /**
      * String names of the neighboring Sectors.
      */
-    private String northRef, eastRef, southRef, westRef;
+    private final String northRef, eastRef, southRef, westRef;
+
+    /**
+     * GameWorld object to call back to.
+     */
+    private final GameWorld activeGameWorld;
 
 }

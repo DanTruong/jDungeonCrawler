@@ -74,12 +74,18 @@ public class PlayerCharacter extends LivingEntity {
     }
 
     public void gameLoop(Scanner sc) {
+        
+                
+                
+                
+                
         System.out.print("Type in a command > ");
         String userInput = sc.nextLine();
         while (!userInput.equalsIgnoreCase("exit")) {
             System.out.print("Type in a command > ");
             userInput = sc.nextLine();
             System.out.println("You typed in: " + userInput);
+            System.out.println(this.getCurrentSector());
         }
     }
 

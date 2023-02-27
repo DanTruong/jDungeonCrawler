@@ -51,7 +51,7 @@ public class Main {
         } catch (IOException ioe) {
             System.out.println("Error! File not found.");
         }
-
+        
         gw.getPlayer().gameLoop(input);
 
         System.out.println("Goodbye!");
