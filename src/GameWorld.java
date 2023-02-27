@@ -40,13 +40,6 @@ public class GameWorld extends DefaultHandler {
         sectorArray = new Sector[99];
         sectorIndex = 0;
     }
-    
-    public void showAllRooms(){
-        for(int i = 0; i < sectorIndex; i++){
-            System.out.println(sectorArray[i] + "\n\n");
-        }
-        
-    }
 
     /**
      * Return Sector based on string input.

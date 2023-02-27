@@ -74,6 +74,30 @@ public class PlayerCharacter extends LivingEntity {
     }
 
     /**
+     * Display commands for the Player to use.
+     */
+    private void displayHelp() {
+        String helpText = """
+                          The goal of this game is to increase your health 
+                          points over 30, while not letting it go below 0. To do 
+                          this, you change the temperature of the Sector that 
+                          you are currently in. You can either "warm" or "cool"  
+                          the Sector that you are currently in. Doing either 
+                          action will affect the people or enemies that are in 
+                          there. Their reaction will either increase or decrease 
+                          your health points.
+                          
+                          Commands:
+                          look: Display information about the Sector.
+                          warm: Increase the temperature of the Sector.
+                          cool: Decrease the temperature of the Sector.
+                          north, east, south, west: Move to the Sector of the indicated direction.
+                          exit: Exit the game.
+                          """;
+        System.out.println(helpText);
+    }
+
+    /**
      * Method to handle and parse user input commands.
      *
      * @param sc Scanner object to handle keyboard input with.
@@ -85,10 +109,10 @@ public class PlayerCharacter extends LivingEntity {
             userInput = sc.nextLine();
             switch (userInput) {
                 case "help" ->
-                    System.out.println("INSERT HELP STUFF HERE");
+                    displayHelp();
                 case "look" ->
                     System.out.println("INSERT INFO ABOUT ROOM HERE");
-                case "warming", "cooling" ->
+                case "warm", "cool" ->
                     System.out.println("INSERT ACTIONS HERE TO CHANGE SECTOR TEMP");
                 case "north", "east", "south", "west" ->
                     System.out.println("You went " + userInput);
