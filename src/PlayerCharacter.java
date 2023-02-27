@@ -73,19 +73,30 @@ public class PlayerCharacter extends LivingEntity {
         //Do nothing at the moment
     }
 
+    /**
+     * Method to handle and parse user input commands.
+     *
+     * @param sc Scanner object to handle keyboard input with.
+     */
     public void gameLoop(Scanner sc) {
-        
-                
-                
-                
-                
-        System.out.print("Type in a command > ");
-        String userInput = sc.nextLine();
+        String userInput = "";
         while (!userInput.equalsIgnoreCase("exit")) {
             System.out.print("Type in a command > ");
             userInput = sc.nextLine();
-            System.out.println("You typed in: " + userInput);
-            System.out.println(this.getCurrentSector());
+            switch (userInput) {
+                case "help" ->
+                    System.out.println("INSERT HELP STUFF HERE");
+                case "look" ->
+                    System.out.println("INSERT INFO ABOUT ROOM HERE");
+                case "warming", "cooling" ->
+                    System.out.println("INSERT ACTIONS HERE TO CHANGE SECTOR TEMP");
+                case "north", "east", "south", "west" ->
+                    System.out.println("You went " + userInput);
+                case "exit" ->
+                    System.out.println("You are now exiting the game...");
+                default ->
+                    System.out.println("Command not found");
+            }
         }
     }
 

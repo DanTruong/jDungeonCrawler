@@ -48,32 +48,6 @@ public class GameWorld extends DefaultHandler {
         
     }
 
-    /*
-    public void connectNeighbors() {
-        for (int i = 0; i < sectorIndex; i++) {
-            try {
-                sectorArray[i].setNeighbor("N", getSector(sectorArray[i].getNeighborReference("N")));
-            } catch (NullPointerException npe) {
-                //System.out.println("Neighbor doesn't exist");
-            }
-            try {
-                sectorArray[i].setNeighbor("E", getSector(sectorArray[i].getNeighborReference("E")));
-            } catch (NullPointerException npe) {
-                //System.out.println("Neighbor doesn't exist");
-            }
-            try {
-                sectorArray[i].setNeighbor("S", getSector(sectorArray[i].getNeighborReference("S")));
-            } catch (NullPointerException npe) {
-                //System.out.println("Neighbor doesn't exist");
-            }
-            try {
-                sectorArray[i].setNeighbor("W", getSector(sectorArray[i].getNeighborReference("W")));
-            } catch (NullPointerException npe) {
-                //System.out.println("Neighbor doesn't exist");
-            }
-        }
-    }*/
-
     /**
      * Return Sector based on string input.
      *
