@@ -64,7 +64,7 @@ public class GameWorld extends DefaultHandler {
         } else {
             return null;
         }
-
+        
     }
 
     /**
@@ -77,18 +77,17 @@ public class GameWorld extends DefaultHandler {
     private void createEntity(String qName, String name, String description) {
         LivingEntity entity = null;
         switch (qName) {
-            case "PlayerCharacter":
+            case "PlayerCharacter" -> {
                 entity = new PlayerCharacter(name, description);
                 this.player = (PlayerCharacter) entity;
-                break;
-            case "AdversarialCharacter":
+            }
+            case "AdversarialCharacter" ->
                 entity = new AdversarialCharacter(name, description);
-                break;
-            default:
+            default ->
                 entity = new NonPlayableCharacter(name, description);
-                break;
         }
         sector.addEntity(entity);
+        entity.setCurrentSector(sector);
     }
 
     /**
@@ -153,7 +152,7 @@ public class GameWorld extends DefaultHandler {
     public void startElement(String uri, String localName, String qName,
             Attributes attr) {
         switch (qName) {
-            case "sector":
+            case "sector" ->
                 createSector(attr.getValue("name"),
                         attr.getValue("description"),
                         attr.getValue("state"),
@@ -163,14 +162,10 @@ public class GameWorld extends DefaultHandler {
                             attr.getValue("south"),
                             attr.getValue("west")
                         });
-                break;
-            case "AdversarialCharacter":
-            case "NonPlayableCharacter":
-            case "PlayerCharacter":
+            case "AdversarialCharacter", "NonPlayableCharacter", "PlayerCharacter" ->
                 createEntity(qName,
                         attr.getValue("name"),
                         attr.getValue("description"));
-                break;
         }
     }
 
@@ -202,5 +197,5 @@ public class GameWorld extends DefaultHandler {
      * The current Sector being created.
      */
     private Sector sector;
-
+    
 }

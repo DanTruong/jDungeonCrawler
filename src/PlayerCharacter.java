@@ -91,7 +91,7 @@ public class PlayerCharacter extends LivingEntity {
                           look: Display information about the Sector.
                           warm: Increase the temperature of the Sector.
                           cool: Decrease the temperature of the Sector.
-                          north, east, south, west: Move to the Sector of the indicated direction.
+                          N, E, S, W: Move to the Sector of the indicated direction.
                           exit: Exit the game.
                           """;
         System.out.println(helpText);
@@ -108,19 +108,25 @@ public class PlayerCharacter extends LivingEntity {
             System.out.print("Type in a command > ");
             userInput = sc.nextLine();
             switch (userInput) {
-                case "help" ->
-                    displayHelp();
-                case "look" ->
-                    System.out.println(getCurrentSector());
+                case "N", "E", "S", "W" -> {
+                    try {
+                        move(getCurrentSector().getNeighbor(userInput));
+                    } catch (NullPointerException npe) {
+                        System.out.println("Sector doesn't exist");
+                    }
+                }
                 case "warm", "cool" ->
                     System.out.println("INSERT ACTIONS HERE TO CHANGE SECTOR TEMP");
-                case "north", "east", "south", "west" ->
-                    System.out.println("You went " + userInput);
+                case "look" ->
+                    System.out.println(getCurrentSector());
+                case "help" ->
+                    displayHelp();
                 case "exit" ->
                     System.out.println("You are now exiting the game...");
                 default ->
                     System.out.println("Command not found");
             }
+
         }
     }
 

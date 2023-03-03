@@ -54,16 +54,39 @@ public class Sector {
     }
 
     /**
+     * Sort the list of Entities by name for easier searching.
+     */
+    private void sortPopulation() {
+        //TODO: SORT ENTITIES IN THE SECTOR
+    }
+
+    /**
      * Method for adding Entities to the Sector.
      *
      * @param le Entity object being added to the Sector.
      */
     public void addEntity(LivingEntity le) {
-        if (populationCount < 7) {
-            le.setCurrentSector(this);
-            population[populationCount] = le;
-            populationCount++;
+        population[populationCount] = le;
+        populationCount++;
+        sortPopulation();
+    }
+
+    /**
+     * Remove the Entity object from the Sector.
+     *
+     * @param le Entity to remove from the Sector.
+     */
+    public void removeEntity(LivingEntity le) {
+        LivingEntity[] tempArray = new LivingEntity[7];
+        int tempPop = 0;
+        for (int i = 0; i < populationCount; i++) {
+            if (!population[i].getName().equals(le.getName())) {
+                tempArray[tempPop] = population[i];
+                tempPop++;
+            }
         }
+        population = tempArray;
+        populationCount--;
 
     }
 

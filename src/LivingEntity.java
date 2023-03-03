@@ -41,6 +41,17 @@ public abstract class LivingEntity {
     }
 
     /**
+     * Command to relocate the Entity from one Sector to another.
+     *
+     * @param nextSector The Sector for the Entity to move to.
+     */
+    public void move(Sector nextSector) {
+        nextSector.addEntity(this);
+        getCurrentSector().removeEntity(this);
+        setCurrentSector(nextSector);
+    }
+
+    /**
      * Changes the Sector that the Entity will be going to.
      *
      * @param sector The sector that the Entity will be moving to.
