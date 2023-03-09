@@ -42,15 +42,6 @@ public class NonPlayableCharacter extends LivingEntity {
     }
 
     /**
-     * This character object likes Sectors that are cold. This method will
-     * decrease the temperature of the Sector that the current Entity is in.
-     */
-    @Override
-    public void changeSectorTemperature() {
-        getCurrentSector().decreaseTemperature();
-    }
-
-    /**
      * Perform an action based on change of the Sector's temperature.
      *
      * @param action The action that was taken in the Sector.
@@ -58,8 +49,10 @@ public class NonPlayableCharacter extends LivingEntity {
     @Override
     public void react(String action) {
         if (action.equals("warming")) {
-            //TODO: Harm the player character
-            //TODO: Try to move to another Sector in a random direction
+            getCurrentSector().getGameWorld().getPlayer().decreaseHealth();
+            attemptMove();
+        } else {
+            getCurrentSector().getGameWorld().getPlayer().increaseHealth();
         }
     }
 

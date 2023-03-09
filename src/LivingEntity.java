@@ -41,12 +41,57 @@ public abstract class LivingEntity {
     }
 
     /**
+     * Command to relocate the Entity from one Sector to another.
+     *
+     * @param nextSector The Sector for the Entity to move to.
+     */
+    public void move(Sector nextSector) {
+        nextSector.addEntity(this);
+        getCurrentSector().removeEntity(this);
+        setCurrentSector(nextSector);
+    }
+
+    /**
+     * Attempt to move in a random direction. Mainly used by the Non Playable
+     * and Adversarial entities.
+     */
+    public void attemptMove() {
+        int rand = (int) (Math.random() * 4);
+        switch (rand) {
+            case 0 -> {
+                try {
+                    move(getCurrentSector().getNeighbor("n"));
+                } catch (NullPointerException npe) {
+                }
+            }
+            case 1 -> {
+                try {
+                    move(getCurrentSector().getNeighbor("e"));
+                } catch (NullPointerException npe) {
+                }
+            }
+            case 2 -> {
+                try {
+                    move(getCurrentSector().getNeighbor("s"));
+                } catch (NullPointerException npe) {
+                }
+            }
+            default -> {
+                try {
+                    move(getCurrentSector().getNeighbor("w"));
+                } catch (NullPointerException npe) {
+                }
+            }
+        }
+    }
+
+    /**
      * Changes the Sector that the Entity will be going to.
      *
      * @param sector The sector that the Entity will be moving to.
      */
     public void setCurrentSector(Sector sector) {
-        this.currentSector = sector;
+        currentSector = sector;
     }
 
     /**
@@ -55,7 +100,7 @@ public abstract class LivingEntity {
      * @return Sector that the Entity is located in.
      */
     public Sector getCurrentSector() {
-        return this.currentSector;
+        return currentSector;
     }
 
     /**
@@ -64,7 +109,7 @@ public abstract class LivingEntity {
      * @return Name of the Entity.
      */
     public String getName() {
-        return this.name;
+        return name;
     }
 
     /**
@@ -73,7 +118,7 @@ public abstract class LivingEntity {
      * @return Description of the Entity.
      */
     public String getDescription() {
-        return this.description;
+        return description;
     }
 
     /**
@@ -85,11 +130,6 @@ public abstract class LivingEntity {
     public String toString() {
         return getName();
     }
-
-    /**
-     * Abstract method for all child classes to change Sector temperature.
-     */
-    public abstract void changeSectorTemperature();
 
     /**
      * Abstract method to trigger actions based on Sector temperature change.

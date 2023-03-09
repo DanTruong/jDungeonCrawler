@@ -42,37 +42,29 @@ public class GameWorld extends DefaultHandler {
     }
 
     /**
-     * Search for Sector based on user's string input. Utilizes Binary Search to
-     * locate Sectors.
+     * Return Sector based on string input.
      *
-     * @param inputQuery String of the Sector's name to search for.
+     * @param sectorName Name of the Sector to search for.
+     * @return Sector (based on String name).
      */
-    public void searchSector(String inputQuery) {
-        if (inputQuery.equalsIgnoreCase("list")) {
-            for (int i = 0; i < sectorIndex; i++) {
-                System.out.println("Sector: " + sectorArray[i].getName());
-            }
-        } else {
-            int low = 0, high = sectorIndex - 1;
-            while (high - low > 1) {
-                int middle = (high + low) / 2;
-                if (sectorArray[middle].getName().compareToIgnoreCase(inputQuery) < 0) {
-                    low = middle + 1;
-                } else {
-                    high = middle;
-                }
-            }
-            if (sectorArray[low].getName().equalsIgnoreCase(inputQuery)) {
-                System.out.println("Found Sector: " + sectorArray[low].getName());
-                System.out.println(sectorArray[low].toString());
-            } else if (sectorArray[high].getName().equalsIgnoreCase(inputQuery)) {
-                System.out.println("Found Sector: " + sectorArray[high].getName());
-                System.out.println(sectorArray[high].toString());
+    public Sector getSector(String sectorName) {
+        int low = 0, high = sectorIndex - 1;
+        while (high - low > 1) {
+            int middle = (high + low) / 2;
+            if (sectorArray[middle].getName().compareToIgnoreCase(sectorName) < 0) {
+                low = middle + 1;
             } else {
-                System.out.println("\"" + inputQuery + "\" does not exist");
+                high = middle;
             }
         }
-
+        if (sectorArray[low].getName().equalsIgnoreCase(sectorName)) {
+            return sectorArray[low];
+        } else if (sectorArray[high].getName().equalsIgnoreCase(sectorName)) {
+            return sectorArray[high];
+        } else {
+            return null;
+        }
+        
     }
 
     /**
@@ -85,18 +77,17 @@ public class GameWorld extends DefaultHandler {
     private void createEntity(String qName, String name, String description) {
         LivingEntity entity = null;
         switch (qName) {
-            case "PlayerCharacter":
+            case "PlayerCharacter" -> {
                 entity = new PlayerCharacter(name, description);
-                this.player = (PlayerCharacter) entity;
-                break;
-            case "AdversarialCharacter":
+                player = (PlayerCharacter) entity;
+            }
+            case "AdversarialCharacter" ->
                 entity = new AdversarialCharacter(name, description);
-                break;
-            default:
+            default ->
                 entity = new NonPlayableCharacter(name, description);
-                break;
         }
         sector.addEntity(entity);
+        entity.setCurrentSector(sector);
     }
 
     /**
@@ -110,7 +101,7 @@ public class GameWorld extends DefaultHandler {
      */
     private void createSector(String name, String description, String state,
             String[] neighbors) {
-        sector = new Sector(name, description, state, neighbors);
+        sector = new Sector(name, description, state, neighbors, this);
         sectorArray[sectorIndex] = sector;
         sectorIndex++;
         executeSort(0, sectorIndex - 1);
@@ -161,7 +152,7 @@ public class GameWorld extends DefaultHandler {
     public void startElement(String uri, String localName, String qName,
             Attributes attr) {
         switch (qName) {
-            case "sector":
+            case "Sector" ->
                 createSector(attr.getValue("name"),
                         attr.getValue("description"),
                         attr.getValue("state"),
@@ -171,14 +162,10 @@ public class GameWorld extends DefaultHandler {
                             attr.getValue("south"),
                             attr.getValue("west")
                         });
-                break;
-            case "AdversarialCharacter":
-            case "NonPlayableCharacter":
-            case "PlayerCharacter":
+            case "AdversarialCharacter", "NonPlayableCharacter", "PlayerCharacter" ->
                 createEntity(qName,
                         attr.getValue("name"),
                         attr.getValue("description"));
-                break;
         }
     }
 
@@ -210,5 +197,5 @@ public class GameWorld extends DefaultHandler {
      * The current Sector being created.
      */
     private Sector sector;
-
+    
 }

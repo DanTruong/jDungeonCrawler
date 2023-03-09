@@ -36,18 +36,28 @@ public class Sector {
      * @param name String to identify the Sector.
      * @param description Description of the Sector.
      * @param temperature Initial state of the Sector's temperature.
+     * @param neighbors References to neighboring Sector's names.
+     * @param gw GameWorld object linked to the Sector.
      */
     public Sector(String name, String description, String temperature,
-            String[] neighbors) {
+            String[] neighbors, GameWorld gw) {
         this.name = name;
         this.description = description;
         this.temperature = temperature;
         this.population = new LivingEntity[7];
         this.populationCount = 0;
-        northRef = neighbors[0];
-        eastRef = neighbors[1];
-        southRef = neighbors[2];
-        westRef = neighbors[3];
+        this.northRef = neighbors[0];
+        this.eastRef = neighbors[1];
+        this.southRef = neighbors[2];
+        this.westRef = neighbors[3];
+        this.activeGameWorld = gw;
+    }
+
+    /**
+     * Sort the list of Entities by name for easier searching.
+     */
+    private void sortPopulation() {
+        //TODO: SORT ENTITIES IN THE SECTOR
     }
 
     /**
@@ -56,12 +66,27 @@ public class Sector {
      * @param le Entity object being added to the Sector.
      */
     public void addEntity(LivingEntity le) {
-        if (populationCount < 7) {
-            le.setCurrentSector(this);
-            population[populationCount] = le;
-            populationCount++;
-        }
+        population[populationCount] = le;
+        populationCount++;
+        sortPopulation();
+    }
 
+    /**
+     * Remove the Entity object from the Sector.
+     *
+     * @param le Entity to remove from the Sector.
+     */
+    public void removeEntity(LivingEntity le) {
+        LivingEntity[] tempArray = new LivingEntity[7];
+        int tempPop = 0;
+        for (int i = 0; i < populationCount; i++) {
+            if (!population[i].getName().equals(le.getName())) {
+                tempArray[tempPop] = population[i];
+                tempPop++;
+            }
+        }
+        population = tempArray;
+        populationCount--;
     }
 
     /**
@@ -71,8 +96,8 @@ public class Sector {
      * temperature state.
      */
     private void notifyAllEntities(String action) {
-        for (int i = 0; i < this.populationCount; i++) {
-            this.population[i].react(action);
+        for (int i = 0; i < populationCount; i++) {
+            population[i].react(action);
         }
     }
 
@@ -81,14 +106,14 @@ public class Sector {
      * temperature will stay the same).
      */
     public void increaseTemperature() {
-        if (this.temperature.equalsIgnoreCase("cold")) {
-            this.temperature = "cool";
+        if (temperature.equalsIgnoreCase("cold")) {
+            temperature = "cool";
             notifyAllEntities("warming");
-        } else if (this.temperature.equalsIgnoreCase("cool")) {
-            this.temperature = "warm";
+        } else if (temperature.equalsIgnoreCase("cool")) {
+            temperature = "warm";
             notifyAllEntities("warming");
-        } else if (this.temperature.equalsIgnoreCase("warm")) {
-            this.temperature = "hot";
+        } else if (temperature.equalsIgnoreCase("warm")) {
+            temperature = "hot";
             notifyAllEntities("warming");
         } else {
             System.out.println("Sector already hot");
@@ -100,40 +125,17 @@ public class Sector {
      * temperature will stay the same).
      */
     public void decreaseTemperature() {
-        if (this.temperature.equalsIgnoreCase("hot")) {
-            this.temperature = "warm";
+        if (temperature.equalsIgnoreCase("hot")) {
+            temperature = "warm";
             notifyAllEntities("cooling");
-        } else if (this.temperature.equalsIgnoreCase("warm")) {
-            this.temperature = "cool";
+        } else if (temperature.equalsIgnoreCase("warm")) {
+            temperature = "cool";
             notifyAllEntities("cooling");
-        } else if (this.temperature.equalsIgnoreCase("cool")) {
-            this.temperature = "cold";
+        } else if (temperature.equalsIgnoreCase("cool")) {
+            temperature = "cold";
             notifyAllEntities("cooling");
         } else {
             System.out.println("Sector already cold");
-        }
-    }
-
-    /**
-     * Sets the neighboring Sectors for the current Sector object.
-     *
-     * @param direction String of the direction to set the neighbor.
-     * @param sector Sector object to assign to the neighboring direction.
-     */
-    public void setNeighbor(String direction, Sector sector) {
-        switch (direction) {
-            case "N":
-                this.north = sector;
-                break;
-            case "E":
-                this.east = sector;
-                break;
-            case "S":
-                this.south = sector;
-                break;
-            default:
-                this.west = sector;
-                break;
         }
     }
 
@@ -145,15 +147,15 @@ public class Sector {
      * @return Neighboring Sector that corresponds to the requested direction.
      */
     public Sector getNeighbor(String direction) {
-        return switch (direction) {
-            case "N" ->
-                this.north;
-            case "E" ->
-                this.east;
-            case "S" ->
-                this.south;
+        return switch (direction.toLowerCase()) {
+            case "n" ->
+                activeGameWorld.getSector(northRef);
+            case "e" ->
+                activeGameWorld.getSector(eastRef);
+            case "s" ->
+                activeGameWorld.getSector(southRef);
             default ->
-                this.west;
+                activeGameWorld.getSector(westRef);
         };
     }
 
@@ -163,7 +165,7 @@ public class Sector {
      * @return Name of the Sector object.
      */
     public String getName() {
-        return this.name;
+        return name;
     }
 
     /**
@@ -172,7 +174,7 @@ public class Sector {
      * @return Description of the Sector object.
      */
     public String getDescription() {
-        return this.description;
+        return description;
     }
 
     /**
@@ -181,7 +183,7 @@ public class Sector {
      * @return Sector's current temperature.
      */
     public String getTemperature() {
-        return this.temperature;
+        return temperature;
     }
 
     /**
@@ -191,21 +193,45 @@ public class Sector {
      */
     @Override
     public String toString() {
-        String listOfEntities = "";
+        String listOfEntities = "", neighbors = "";
 
         for (int i = 0; i < populationCount; i++) {
             listOfEntities += population[i] + " ("
                     + population[i].getClass().getName() + "), ";
         }
 
+        try {
+            neighbors += "\nNorth: " + getNeighbor("N").getName();
+        } catch (NullPointerException npe) {
+        }
+        try {
+            neighbors += "\nEast: " + getNeighbor("E").getName();
+        } catch (NullPointerException npe) {
+        }
+        try {
+            neighbors += "\nSouth: " + getNeighbor("S").getName();
+        } catch (NullPointerException npe) {
+        }
+        try {
+            neighbors += "\nWest: " + getNeighbor("W").getName();
+        } catch (NullPointerException npe) {
+        }
+
         return "Sector: " + getName()
                 + ". " + getDescription()
                 + "\nCurrent Temperature: " + getTemperature()
-                + "\nNorth: " + this.northRef
-                + "\nEast: " + this.eastRef
-                + "\nSouth: " + this.southRef
-                + "\nWest: " + this.westRef
+                + neighbors
                 + "\nEntities: " + listOfEntities;
+    }
+
+    /**
+     * Returns the game world that the Sector resides in. Needed for locating
+     * neighboring objects.
+     *
+     * @return Game world that the Sector is part of.
+     */
+    public GameWorld getGameWorld() {
+        return activeGameWorld;
     }
 
     /**
@@ -230,13 +256,13 @@ public class Sector {
     private int populationCount;
 
     /**
-     * Neighboring Sector references.
-     */
-    private Sector north, east, south, west;
-
-    /**
      * String names of the neighboring Sectors.
      */
-    private String northRef, eastRef, southRef, westRef;
+    private final String northRef, eastRef, southRef, westRef;
+
+    /**
+     * GameWorld object to call back to.
+     */
+    private final GameWorld activeGameWorld;
 
 }
