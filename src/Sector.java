@@ -87,7 +87,6 @@ public class Sector {
         }
         population = tempArray;
         populationCount--;
-
     }
 
     /**
@@ -97,8 +96,8 @@ public class Sector {
      * temperature state.
      */
     private void notifyAllEntities(String action) {
-        for (int i = 0; i < this.populationCount; i++) {
-            this.population[i].react(action);
+        for (int i = 0; i < populationCount; i++) {
+            population[i].react(action);
         }
     }
 
@@ -107,14 +106,14 @@ public class Sector {
      * temperature will stay the same).
      */
     public void increaseTemperature() {
-        if (this.temperature.equalsIgnoreCase("cold")) {
-            this.temperature = "cool";
+        if (temperature.equalsIgnoreCase("cold")) {
+            temperature = "cool";
             notifyAllEntities("warming");
-        } else if (this.temperature.equalsIgnoreCase("cool")) {
-            this.temperature = "warm";
+        } else if (temperature.equalsIgnoreCase("cool")) {
+            temperature = "warm";
             notifyAllEntities("warming");
-        } else if (this.temperature.equalsIgnoreCase("warm")) {
-            this.temperature = "hot";
+        } else if (temperature.equalsIgnoreCase("warm")) {
+            temperature = "hot";
             notifyAllEntities("warming");
         } else {
             System.out.println("Sector already hot");
@@ -126,14 +125,14 @@ public class Sector {
      * temperature will stay the same).
      */
     public void decreaseTemperature() {
-        if (this.temperature.equalsIgnoreCase("hot")) {
-            this.temperature = "warm";
+        if (temperature.equalsIgnoreCase("hot")) {
+            temperature = "warm";
             notifyAllEntities("cooling");
-        } else if (this.temperature.equalsIgnoreCase("warm")) {
-            this.temperature = "cool";
+        } else if (temperature.equalsIgnoreCase("warm")) {
+            temperature = "cool";
             notifyAllEntities("cooling");
-        } else if (this.temperature.equalsIgnoreCase("cool")) {
-            this.temperature = "cold";
+        } else if (temperature.equalsIgnoreCase("cool")) {
+            temperature = "cold";
             notifyAllEntities("cooling");
         } else {
             System.out.println("Sector already cold");
@@ -148,15 +147,15 @@ public class Sector {
      * @return Neighboring Sector that corresponds to the requested direction.
      */
     public Sector getNeighbor(String direction) {
-        return switch (direction) {
-            case "N" ->
-                this.activeGameWorld.getSector(northRef);
-            case "E" ->
-                this.activeGameWorld.getSector(eastRef);
-            case "S" ->
-                this.activeGameWorld.getSector(southRef);
+        return switch (direction.toLowerCase()) {
+            case "n" ->
+                activeGameWorld.getSector(northRef);
+            case "e" ->
+                activeGameWorld.getSector(eastRef);
+            case "s" ->
+                activeGameWorld.getSector(southRef);
             default ->
-                this.activeGameWorld.getSector(westRef);
+                activeGameWorld.getSector(westRef);
         };
     }
 
@@ -166,7 +165,7 @@ public class Sector {
      * @return Name of the Sector object.
      */
     public String getName() {
-        return this.name;
+        return name;
     }
 
     /**
@@ -175,7 +174,7 @@ public class Sector {
      * @return Description of the Sector object.
      */
     public String getDescription() {
-        return this.description;
+        return description;
     }
 
     /**
@@ -184,7 +183,7 @@ public class Sector {
      * @return Sector's current temperature.
      */
     public String getTemperature() {
-        return this.temperature;
+        return temperature;
     }
 
     /**
@@ -223,6 +222,16 @@ public class Sector {
                 + "\nCurrent Temperature: " + getTemperature()
                 + neighbors
                 + "\nEntities: " + listOfEntities;
+    }
+
+    /**
+     * Returns the game world that the Sector resides in. Needed for locating
+     * neighboring objects.
+     *
+     * @return Game world that the Sector is part of.
+     */
+    public GameWorld getGameWorld() {
+        return activeGameWorld;
     }
 
     /**

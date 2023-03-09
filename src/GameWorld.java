@@ -79,7 +79,7 @@ public class GameWorld extends DefaultHandler {
         switch (qName) {
             case "PlayerCharacter" -> {
                 entity = new PlayerCharacter(name, description);
-                this.player = (PlayerCharacter) entity;
+                player = (PlayerCharacter) entity;
             }
             case "AdversarialCharacter" ->
                 entity = new AdversarialCharacter(name, description);
@@ -152,7 +152,7 @@ public class GameWorld extends DefaultHandler {
     public void startElement(String uri, String localName, String qName,
             Attributes attr) {
         switch (qName) {
-            case "sector" ->
+            case "Sector" ->
                 createSector(attr.getValue("name"),
                         attr.getValue("description"),
                         attr.getValue("state"),

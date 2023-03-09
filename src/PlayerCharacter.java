@@ -39,7 +39,7 @@ public class PlayerCharacter extends LivingEntity {
      */
     public PlayerCharacter(String name, String description) {
         super(name, description);
-        this.health = 20;
+        health = 20;
     }
 
     /**
@@ -48,17 +48,21 @@ public class PlayerCharacter extends LivingEntity {
      * @return Current health of the player.
      */
     public int getHealth() {
-        return this.health;
+        return health;
     }
 
     /**
-     * This method is currently programmed to do nothing at the moment. This
-     * must exist because it is an abstract method for this object's parent
-     * class.
+     * Increase the player's health.
      */
-    @Override
-    public void changeSectorTemperature() {
-        //Do nothing at the moment
+    public void increaseHealth() {
+        health++;
+    }
+
+    /**
+     * Decrease the player's health.
+     */
+    public void decreaseHealth() {
+        health--;
     }
 
     /**
@@ -106,19 +110,21 @@ public class PlayerCharacter extends LivingEntity {
         String userInput = "";
         while (!userInput.equalsIgnoreCase("exit")) {
             System.out.print("Type in a command > ");
-            userInput = sc.nextLine();
+            userInput = sc.nextLine().toLowerCase();
             switch (userInput) {
-                case "N", "E", "S", "W" -> {
+                case "n", "e", "s", "w" -> {
                     try {
                         move(getCurrentSector().getNeighbor(userInput));
                     } catch (NullPointerException npe) {
                         System.out.println("Sector doesn't exist");
                     }
                 }
-                case "warm", "cool" ->
-                    System.out.println("INSERT ACTIONS HERE TO CHANGE SECTOR TEMP");
+                case "warm" ->
+                    getCurrentSector().increaseTemperature();
+                case "cool" ->
+                    getCurrentSector().decreaseTemperature();
                 case "look" ->
-                    System.out.println(getCurrentSector());
+                    System.out.println(getCurrentSector() + "\n\nYour current health is " + health);
                 case "help" ->
                     displayHelp();
                 case "exit" ->
