@@ -56,8 +56,54 @@ public class Sector {
     /**
      * Sort the list of Entities by name for easier searching.
      */
-    private void sortPopulation() {
-        //TODO: SORT ENTITIES IN THE SECTOR
+    private void sortPopulation(int low, int high) {
+        int qsLow = low, qsHigh = high, pivot = low + (high - low) / 2;
+        while (qsLow <= qsHigh) {
+            while (population[qsLow].getName().compareTo(population[pivot].getName()) < 0) {
+                qsLow++;
+            }
+            while (population[qsHigh].getName().compareTo(population[pivot].getName()) > 0) {
+                qsHigh--;
+            }
+            if (qsLow <= qsHigh) {
+                LivingEntity temp = population[qsLow];
+                population[qsLow] = population[qsHigh];
+                population[qsHigh] = temp;
+                qsLow++;
+                qsHigh--;
+            }
+        }
+        if (low < qsHigh) {
+            sortPopulation(low, qsHigh);
+        }
+        if (qsLow < high) {
+            sortPopulation(qsLow, high);
+        }
+    }
+
+    /**
+     * Searches for Entity based on it's name.
+     *
+     * @param name Name of the Entity to search for
+     * @return Entity in the population array.
+     */
+    public LivingEntity getEntity(String name) {
+        int low = 0, high = populationCount - 1;
+        while (high - low > 1) {
+            int middle = (high + low) / 2;
+            if (population[middle].getName().compareToIgnoreCase(name) < 0) {
+                low = middle + 1;
+            } else {
+                high = middle;
+            }
+        }
+        if (population[low].getName().equalsIgnoreCase(name)) {
+            return population[low];
+        } else if (population[high].getName().equalsIgnoreCase(name)) {
+            return population[high];
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -68,7 +114,7 @@ public class Sector {
     public void addEntity(LivingEntity le) {
         population[populationCount] = le;
         populationCount++;
-        sortPopulation();
+        sortPopulation(0, populationCount - 1);
     }
 
     /**
@@ -87,6 +133,7 @@ public class Sector {
         }
         population = tempArray;
         populationCount--;
+        sortPopulation(0, populationCount - 1);
     }
 
     /**
