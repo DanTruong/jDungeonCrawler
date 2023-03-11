@@ -28,6 +28,7 @@
  * @author Dan Truong
  */
 import java.util.ArrayList;
+import java.util.HashMap;
 import org.xml.sax.helpers.DefaultHandler;
 import org.xml.sax.*;
 
@@ -38,7 +39,7 @@ public class GameWorld extends DefaultHandler {
      */
     public GameWorld() {
         sector = null;
-        sectorList = new ArrayList();
+        sectorMap = new HashMap();
     }
 
     /**
@@ -48,22 +49,7 @@ public class GameWorld extends DefaultHandler {
      * @return Sector (based on String name).
      */
     public Sector getSector(String sectorName) {
-        int low = 0, high = sectorList.size() - 1;
-        while (high - low > 1) {
-            int middle = (high + low) / 2;
-            if (sectorList.get(middle).getName().compareToIgnoreCase(sectorName) < 0) {
-                low = middle + 1;
-            } else {
-                high = middle;
-            }
-        }
-        if (sectorList.get(low).getName().equalsIgnoreCase(sectorName)) {
-            return sectorList.get(low);
-        } else if (sectorList.get(high).getName().equalsIgnoreCase(sectorName)) {
-            return sectorList.get(high);
-        } else {
-            return null;
-        }
+        return sectorMap.get(sectorName);
     }
 
     /**
@@ -101,40 +87,7 @@ public class GameWorld extends DefaultHandler {
     private void createSector(String name, String description, String state,
             String[] neighbors) {
         sector = new Sector(name, description, state, neighbors, this);
-        sectorList.add(sector);
-        executeSort(0, sectorList.size() - 1);
-    }
-
-    /**
-     * Executes quicksort sorting algorithm on the Sector array for easier
-     * searching.
-     *
-     * @param low Left-most index of the array.
-     * @param high Right-most index of the array.
-     */
-    private void executeSort(int low, int high) {
-        int qsLow = low, qsHigh = high, pivot = low + (high - low) / 2;
-        while (qsLow <= qsHigh) {
-            while (sectorList.get(qsLow).getName().compareTo(sectorList.get(pivot).getName()) < 0) {
-                qsLow++;
-            }
-            while (sectorList.get(qsHigh).getName().compareTo(sectorList.get(pivot).getName()) > 0) {
-                qsHigh--;
-            }
-            if (qsLow <= qsHigh) {
-                Sector temp = sectorList.get(qsLow);
-                sectorList.set(qsLow, sectorList.get(qsHigh));
-                sectorList.set(qsHigh, temp);
-                qsLow++;
-                qsHigh--;
-            }
-        }
-        if (low < qsHigh) {
-            executeSort(low, qsHigh);
-        }
-        if (qsLow < high) {
-            executeSort(qsLow, high);
-        }
+        sectorMap.put(name, sector);
     }
 
     /**
@@ -179,7 +132,7 @@ public class GameWorld extends DefaultHandler {
     /**
      * Used for holding the Sectors in the Game World.
      */
-    private ArrayList<Sector> sectorList;
+    private HashMap<String, Sector> sectorMap;
 
     /**
      * Player character being created for the game session.
