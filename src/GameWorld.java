@@ -64,7 +64,7 @@ public class GameWorld extends DefaultHandler {
         } else {
             return null;
         }
-        
+
     }
 
     /**
@@ -197,5 +197,5 @@ public class GameWorld extends DefaultHandler {
      * The current Sector being created.
      */
     private Sector sector;
-    
+
 }

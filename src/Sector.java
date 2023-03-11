@@ -56,8 +56,54 @@ public class Sector {
     /**
      * Sort the list of Entities by name for easier searching.
      */
-    private void sortPopulation() {
-        //TODO: SORT ENTITIES IN THE SECTOR
+    private void sortPopulation(int low, int high) {
+        int qsLow = low, qsHigh = high, pivot = low + (high - low) / 2;
+        while (qsLow <= qsHigh) {
+            while (population[qsLow].getName().compareTo(population[pivot].getName()) < 0) {
+                qsLow++;
+            }
+            while (population[qsHigh].getName().compareTo(population[pivot].getName()) > 0) {
+                qsHigh--;
+            }
+            if (qsLow <= qsHigh) {
+                LivingEntity temp = population[qsLow];
+                population[qsLow] = population[qsHigh];
+                population[qsHigh] = temp;
+                qsLow++;
+                qsHigh--;
+            }
+        }
+        if (low < qsHigh) {
+            sortPopulation(low, qsHigh);
+        }
+        if (qsLow < high) {
+            sortPopulation(qsLow, high);
+        }
+    }
+
+    /**
+     * Searches for Entity based on it's name.
+     *
+     * @param name Name of the Entity to search for
+     * @return Entity in the population array.
+     */
+    public LivingEntity getEntity(String name) {
+        int low = 0, high = populationCount - 1;
+        while (high - low > 1) {
+            int middle = (high + low) / 2;
+            if (population[middle].getName().compareToIgnoreCase(name) < 0) {
+                low = middle + 1;
+            } else {
+                high = middle;
+            }
+        }
+        if (population[low].getName().equalsIgnoreCase(name)) {
+            return population[low];
+        } else if (population[high].getName().equalsIgnoreCase(name)) {
+            return population[high];
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -68,7 +114,7 @@ public class Sector {
     public void addEntity(LivingEntity le) {
         population[populationCount] = le;
         populationCount++;
-        sortPopulation();
+        sortPopulation(0, populationCount - 1);
     }
 
     /**
@@ -87,6 +133,7 @@ public class Sector {
         }
         population = tempArray;
         populationCount--;
+        sortPopulation(0, populationCount - 1);
     }
 
     /**
@@ -95,48 +142,18 @@ public class Sector {
      * @param action The action that was taken to change the Sector's
      * temperature state.
      */
-    private void notifyAllEntities(String action) {
+    public void notifyAllEntities(String action) {
         for (int i = 0; i < populationCount; i++) {
             population[i].react(action);
         }
     }
 
     /**
-     * Increases the temperature of the sector (if it's already hot, then the
-     * temperature will stay the same).
+     *
+     * @param temperature
      */
-    public void increaseTemperature() {
-        if (temperature.equalsIgnoreCase("cold")) {
-            temperature = "cool";
-            notifyAllEntities("warming");
-        } else if (temperature.equalsIgnoreCase("cool")) {
-            temperature = "warm";
-            notifyAllEntities("warming");
-        } else if (temperature.equalsIgnoreCase("warm")) {
-            temperature = "hot";
-            notifyAllEntities("warming");
-        } else {
-            System.out.println("Sector already hot");
-        }
-    }
-
-    /**
-     * Decreases the temperature of the sector (if it's already cold, then the
-     * temperature will stay the same).
-     */
-    public void decreaseTemperature() {
-        if (temperature.equalsIgnoreCase("hot")) {
-            temperature = "warm";
-            notifyAllEntities("cooling");
-        } else if (temperature.equalsIgnoreCase("warm")) {
-            temperature = "cool";
-            notifyAllEntities("cooling");
-        } else if (temperature.equalsIgnoreCase("cool")) {
-            temperature = "cold";
-            notifyAllEntities("cooling");
-        } else {
-            System.out.println("Sector already cold");
-        }
+    public void setTemperature(String temperature) {
+        this.temperature = temperature;
     }
 
     /**

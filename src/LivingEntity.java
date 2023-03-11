@@ -86,6 +86,51 @@ public abstract class LivingEntity {
     }
 
     /**
+     * Change the state of the Sector's temp by increasing or decreasing the
+     * temperature.
+     *
+     * @param increase Boolean value; true if the Sector is being facing
+     * temperature increase, false if decrease in temperature.
+     */
+    public void changeSectorTemperature(boolean increase) {
+        if (increase) {
+            switch (getCurrentSector().getTemperature()) {
+                case "cold" -> {
+                    getCurrentSector().setTemperature("cool");
+                    getCurrentSector().notifyAllEntities("warming");
+                }
+                case "cool" -> {
+                    getCurrentSector().setTemperature("warm");
+                    getCurrentSector().notifyAllEntities("warming");
+                }
+                case "warm" -> {
+                    getCurrentSector().setTemperature("hot");
+                    getCurrentSector().notifyAllEntities("warming");
+                }
+                default ->
+                    System.out.println("Sector already hot");
+            }
+        } else {
+            switch (getCurrentSector().getTemperature()) {
+                case "hot" -> {
+                    getCurrentSector().setTemperature("warm");
+                    getCurrentSector().notifyAllEntities("cooling");
+                }
+                case "warm" -> {
+                    getCurrentSector().setTemperature("cool");
+                    getCurrentSector().notifyAllEntities("cooling");
+                }
+                case "cool" -> {
+                    getCurrentSector().setTemperature("cold");
+                    getCurrentSector().notifyAllEntities("cooling");
+                }
+                default ->
+                    System.out.println("Sector already cold");
+            }
+        }
+    }
+
+    /**
      * Changes the Sector that the Entity will be going to.
      *
      * @param sector The sector that the Entity will be moving to.

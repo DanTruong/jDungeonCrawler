@@ -111,26 +111,50 @@ public class PlayerCharacter extends LivingEntity {
         while (!userInput.equalsIgnoreCase("exit")) {
             System.out.print("Type in a command > ");
             userInput = sc.nextLine().toLowerCase();
-            switch (userInput) {
-                case "n", "e", "s", "w" -> {
-                    try {
-                        move(getCurrentSector().getNeighbor(userInput));
-                    } catch (NullPointerException npe) {
-                        System.out.println("Sector doesn't exist");
+            if (userInput.contains(":")) {
+                String command[] = userInput.split(":");
+                if (getCurrentSector().getEntity(command[0]) != null) {
+                    switch (command[1]) {
+                        case "n", "e", "s", "w" -> {
+                            try {
+                                System.out.println(getCurrentSector().getEntity(command[0]) + " is going to " + getCurrentSector().getNeighbor(command[1]).getName());
+                                getCurrentSector().getEntity(command[0]).move(getCurrentSector().getNeighbor(command[1]));
+                            } catch (NullPointerException npe) {
+                                System.out.println(getCurrentSector().getEntity(command[0]) + " is not going anywhere.");
+                            }
+                        }
+                        case "warm" ->
+                            getCurrentSector().getEntity(command[0]).changeSectorTemperature(true);
+                        case "cool" ->
+                            getCurrentSector().getEntity(command[0]).changeSectorTemperature(false);
+                        default ->
+                            System.out.println("Command not found");
                     }
+                } else {
+                    System.out.println("Creature not found");
                 }
-                case "warm" ->
-                    getCurrentSector().increaseTemperature();
-                case "cool" ->
-                    getCurrentSector().decreaseTemperature();
-                case "look" ->
-                    System.out.println(getCurrentSector() + "\n\nYour current health is " + health);
-                case "help" ->
-                    displayHelp();
-                case "exit" ->
-                    System.out.println("You are now exiting the game...");
-                default ->
-                    System.out.println("Command not found");
+            } else {
+                switch (userInput) {
+                    case "n", "e", "s", "w" -> {
+                        try {
+                            move(getCurrentSector().getNeighbor(userInput));
+                        } catch (NullPointerException npe) {
+                            System.out.println("Sector doesn't exist");
+                        }
+                    }
+                    case "warm" ->
+                        changeSectorTemperature(true);
+                    case "cool" ->
+                        changeSectorTemperature(false);
+                    case "look" ->
+                        System.out.println(getCurrentSector() + "\n\nYour current health is " + health);
+                    case "help" ->
+                        displayHelp();
+                    case "exit" ->
+                        System.out.println("You are now exiting the game...");
+                    default ->
+                        System.out.println("Command not found");
+                }
             }
 
         }
