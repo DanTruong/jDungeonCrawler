@@ -38,7 +38,7 @@ public class Main {
 
     public static void main(String[] args) throws SAXException,
             ParserConfigurationException {
-
+        
         Scanner input = new Scanner(System.in);
         GameWorld gw = new GameWorld();
         String xmlFile = "game.xml";
