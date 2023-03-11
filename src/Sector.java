@@ -28,6 +28,8 @@
  *
  * @author Dan Truong
  */
+import java.util.ArrayList;
+
 public class Sector {
 
     /**
@@ -44,8 +46,7 @@ public class Sector {
         this.name = name;
         this.description = description;
         this.temperature = temperature;
-        this.population = new LivingEntity[7];
-        this.populationCount = 0;
+        this.populationList = new ArrayList();
         this.northRef = neighbors[0];
         this.eastRef = neighbors[1];
         this.southRef = neighbors[2];
@@ -59,16 +60,16 @@ public class Sector {
     private void sortPopulation(int low, int high) {
         int qsLow = low, qsHigh = high, pivot = low + (high - low) / 2;
         while (qsLow <= qsHigh) {
-            while (population[qsLow].getName().compareTo(population[pivot].getName()) < 0) {
+            while (populationList.get(qsLow).getName().compareTo(populationList.get(pivot).getName()) < 0) {
                 qsLow++;
             }
-            while (population[qsHigh].getName().compareTo(population[pivot].getName()) > 0) {
+            while (populationList.get(qsHigh).getName().compareTo(populationList.get(pivot).getName()) > 0) {
                 qsHigh--;
             }
             if (qsLow <= qsHigh) {
-                LivingEntity temp = population[qsLow];
-                population[qsLow] = population[qsHigh];
-                population[qsHigh] = temp;
+                LivingEntity temp = populationList.get(qsLow);
+                populationList.set(qsLow, populationList.get(qsHigh));
+                populationList.set(qsHigh, temp);
                 qsLow++;
                 qsHigh--;
             }
@@ -88,19 +89,19 @@ public class Sector {
      * @return Entity in the population array.
      */
     public LivingEntity getEntity(String name) {
-        int low = 0, high = populationCount - 1;
+        int low = 0, high = populationList.size() - 1;
         while (high - low > 1) {
             int middle = (high + low) / 2;
-            if (population[middle].getName().compareToIgnoreCase(name) < 0) {
+            if (populationList.get(middle).getName().compareToIgnoreCase(name) < 0) {
                 low = middle + 1;
             } else {
                 high = middle;
             }
         }
-        if (population[low].getName().equalsIgnoreCase(name)) {
-            return population[low];
-        } else if (population[high].getName().equalsIgnoreCase(name)) {
-            return population[high];
+        if (populationList.get(low).getName().equalsIgnoreCase(name)) {
+            return populationList.get(low);
+        } else if (populationList.get(high).getName().equalsIgnoreCase(name)) {
+            return populationList.get(high);
         } else {
             return null;
         }
@@ -112,9 +113,10 @@ public class Sector {
      * @param le Entity object being added to the Sector.
      */
     public void addEntity(LivingEntity le) {
-        population[populationCount] = le;
-        populationCount++;
-        sortPopulation(0, populationCount - 1);
+        if (populationList.size() <= 10) {
+            populationList.add(le);
+            sortPopulation(0, populationList.size() - 1);
+        }
     }
 
     /**
@@ -123,17 +125,7 @@ public class Sector {
      * @param le Entity to remove from the Sector.
      */
     public void removeEntity(LivingEntity le) {
-        LivingEntity[] tempArray = new LivingEntity[7];
-        int tempPop = 0;
-        for (int i = 0; i < populationCount; i++) {
-            if (!population[i].getName().equals(le.getName())) {
-                tempArray[tempPop] = population[i];
-                tempPop++;
-            }
-        }
-        population = tempArray;
-        populationCount--;
-        sortPopulation(0, populationCount - 1);
+        populationList.remove(le);
     }
 
     /**
@@ -143,8 +135,8 @@ public class Sector {
      * temperature state.
      */
     public void notifyAllEntities(String action) {
-        for (int i = 0; i < populationCount; i++) {
-            population[i].react(action);
+        for (int i = 0; i < populationList.size(); i++) {
+            populationList.get(i).react(action);
         }
     }
 
@@ -212,9 +204,9 @@ public class Sector {
     public String toString() {
         String listOfEntities = "", neighbors = "";
 
-        for (int i = 0; i < populationCount; i++) {
-            listOfEntities += population[i] + " ("
-                    + population[i].getClass().getName() + "), ";
+        for (int i = 0; i < populationList.size(); i++) {
+            listOfEntities += populationList.get(i) + " {"
+                    + populationList.get(i).getClass().getName() + "), ";
         }
 
         try {
@@ -263,14 +255,9 @@ public class Sector {
     private String temperature;
 
     /**
-     * Array to hold Entity objects in the Sector.
+     * ArrayList to hold Entity objects in the Sector.
      */
-    private LivingEntity[] population;
-
-    /**
-     * Number count to track how many Entities are in the Sector.
-     */
-    private int populationCount;
+    private ArrayList<LivingEntity> populationList;
 
     /**
      * String names of the neighboring Sectors.

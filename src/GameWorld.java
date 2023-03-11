@@ -27,6 +27,7 @@
  *
  * @author Dan Truong
  */
+import java.util.ArrayList;
 import org.xml.sax.helpers.DefaultHandler;
 import org.xml.sax.*;
 
@@ -37,8 +38,7 @@ public class GameWorld extends DefaultHandler {
      */
     public GameWorld() {
         sector = null;
-        sectorArray = new Sector[99];
-        sectorIndex = 0;
+        sectorList = new ArrayList();
     }
 
     /**
@@ -48,23 +48,22 @@ public class GameWorld extends DefaultHandler {
      * @return Sector (based on String name).
      */
     public Sector getSector(String sectorName) {
-        int low = 0, high = sectorIndex - 1;
+        int low = 0, high = sectorList.size() - 1;
         while (high - low > 1) {
             int middle = (high + low) / 2;
-            if (sectorArray[middle].getName().compareToIgnoreCase(sectorName) < 0) {
+            if (sectorList.get(middle).getName().compareToIgnoreCase(sectorName) < 0) {
                 low = middle + 1;
             } else {
                 high = middle;
             }
         }
-        if (sectorArray[low].getName().equalsIgnoreCase(sectorName)) {
-            return sectorArray[low];
-        } else if (sectorArray[high].getName().equalsIgnoreCase(sectorName)) {
-            return sectorArray[high];
+        if (sectorList.get(low).getName().equalsIgnoreCase(sectorName)) {
+            return sectorList.get(low);
+        } else if (sectorList.get(high).getName().equalsIgnoreCase(sectorName)) {
+            return sectorList.get(high);
         } else {
             return null;
         }
-
     }
 
     /**
@@ -102,9 +101,8 @@ public class GameWorld extends DefaultHandler {
     private void createSector(String name, String description, String state,
             String[] neighbors) {
         sector = new Sector(name, description, state, neighbors, this);
-        sectorArray[sectorIndex] = sector;
-        sectorIndex++;
-        executeSort(0, sectorIndex - 1);
+        sectorList.add(sector);
+        executeSort(0, sectorList.size() - 1);
     }
 
     /**
@@ -117,16 +115,16 @@ public class GameWorld extends DefaultHandler {
     private void executeSort(int low, int high) {
         int qsLow = low, qsHigh = high, pivot = low + (high - low) / 2;
         while (qsLow <= qsHigh) {
-            while (sectorArray[qsLow].getName().compareTo(sectorArray[pivot].getName()) < 0) {
+            while (sectorList.get(qsLow).getName().compareTo(sectorList.get(pivot).getName()) < 0) {
                 qsLow++;
             }
-            while (sectorArray[qsHigh].getName().compareTo(sectorArray[pivot].getName()) > 0) {
+            while (sectorList.get(qsHigh).getName().compareTo(sectorList.get(pivot).getName()) > 0) {
                 qsHigh--;
             }
             if (qsLow <= qsHigh) {
-                Sector temp = sectorArray[qsLow];
-                sectorArray[qsLow] = sectorArray[qsHigh];
-                sectorArray[qsHigh] = temp;
+                Sector temp = sectorList.get(qsLow);
+                sectorList.set(qsLow, sectorList.get(qsHigh));
+                sectorList.set(qsHigh, temp);
                 qsLow++;
                 qsHigh--;
             }
@@ -181,12 +179,7 @@ public class GameWorld extends DefaultHandler {
     /**
      * Used for holding the Sectors in the Game World.
      */
-    private Sector[] sectorArray;
-
-    /**
-     * To keep track of Sectors in the Sector array.
-     */
-    private int sectorIndex;
+    private ArrayList<Sector> sectorList;
 
     /**
      * Player character being created for the game session.
