@@ -28,4 +28,4 @@ Commands are case-sensitive
 - **Entity's Name:action** - Directs the specified Entity to move in a specific direction or warm/cool the sector (i.e. "House Fly #3:n" will move the specified entity to the North neighbor.
 - **look** - Look at current information about the Sector
 - **help** - Display the help commands
-- **quit** - Quit the game
+- **exit** - Exit the game
