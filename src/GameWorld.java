@@ -27,7 +27,6 @@
  *
  * @author Dan Truong
  */
-import java.util.ArrayList;
 import java.util.HashMap;
 import org.xml.sax.helpers.DefaultHandler;
 import org.xml.sax.*;

@@ -28,7 +28,7 @@
  *
  * @author Dan Truong
  */
-import java.util.HashMap;
+import java.util.ArrayList;
 
 public class Sector {
 
@@ -46,7 +46,7 @@ public class Sector {
         this.name = name;
         this.description = description;
         this.temperature = temperature;
-        this.entityMap = new HashMap();
+        this.populationList = new ArrayList();
         this.northRef = neighbors[0];
         this.eastRef = neighbors[1];
         this.southRef = neighbors[2];
@@ -55,13 +55,56 @@ public class Sector {
     }
 
     /**
+     * Sort the list of Entities by name for easier searching.
+     */
+    private void sortPopulation(int low, int high) {
+        int qsLow = low, qsHigh = high, pivot = low + (high - low) / 2;
+        while (qsLow <= qsHigh) {
+            while (populationList.get(qsLow).getName().compareTo(populationList.get(pivot).getName()) < 0) {
+                qsLow++;
+            }
+            while (populationList.get(qsHigh).getName().compareTo(populationList.get(pivot).getName()) > 0) {
+                qsHigh--;
+            }
+            if (qsLow <= qsHigh) {
+                LivingEntity temp = populationList.get(qsLow);
+                populationList.set(qsLow, populationList.get(qsHigh));
+                populationList.set(qsHigh, temp);
+                qsLow++;
+                qsHigh--;
+            }
+        }
+        if (low < qsHigh) {
+            sortPopulation(low, qsHigh);
+        }
+        if (qsLow < high) {
+            sortPopulation(qsLow, high);
+        }
+    }
+
+    /**
      * Searches for Entity based on it's name.
      *
      * @param name Name of the Entity to search for
-     * @return Entity in the Sector.
+     * @return Entity in the population array.
      */
     public LivingEntity getEntity(String name) {
-        return entityMap.get(name);
+        int low = 0, high = populationList.size() - 1;
+        while (high - low > 1) {
+            int middle = (high + low) / 2;
+            if (populationList.get(middle).getName().compareToIgnoreCase(name) < 0) {
+                low = middle + 1;
+            } else {
+                high = middle;
+            }
+        }
+        if (populationList.get(low).getName().equalsIgnoreCase(name)) {
+            return populationList.get(low);
+        } else if (populationList.get(high).getName().equalsIgnoreCase(name)) {
+            return populationList.get(high);
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -70,8 +113,9 @@ public class Sector {
      * @param le Entity object being added to the Sector.
      */
     public void addEntity(LivingEntity le) {
-        if (entityMap.size() <= 10) {
-            entityMap.put(le.getName(), le);
+        if (populationList.size() <= 10) {
+            populationList.add(le);
+            sortPopulation(0, populationList.size() - 1);
         }
     }
 
@@ -81,7 +125,7 @@ public class Sector {
      * @param le Entity to remove from the Sector.
      */
     public void removeEntity(LivingEntity le) {
-        entityMap.remove(le.getName());
+        populationList.remove(le);
     }
 
     /**
@@ -91,8 +135,8 @@ public class Sector {
      * temperature state.
      */
     public void notifyAllEntities(String action) {
-        for (String i : entityMap.keySet()) {
-            entityMap.get(i).react(action);
+        for (int i = 0; i < populationList.size(); i++) {
+            populationList.get(i).react(action);
         }
     }
 
@@ -160,8 +204,9 @@ public class Sector {
     public String toString() {
         String listOfEntities = "", neighbors = "";
 
-        for (String i : entityMap.keySet()) {
-            listOfEntities += i + ", ";
+        for (int i = 0; i < populationList.size(); i++) {
+            listOfEntities += populationList.get(i) + " {"
+                    + populationList.get(i).getClass().getName() + "), ";
         }
 
         try {
@@ -210,9 +255,9 @@ public class Sector {
     private String temperature;
 
     /**
-     * Data structure to hold Entity objects in the Sector.
+     * ArrayList to hold Entity objects in the Sector.
      */
-    private HashMap<String, LivingEntity> entityMap;
+    private ArrayList<LivingEntity> populationList;
 
     /**
      * String names of the neighboring Sectors.
