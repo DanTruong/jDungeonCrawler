@@ -15,6 +15,14 @@ PS C:\jDungeonCrawler\dist> java -jar ".\jDungeonCrawler.jar"
 Enter a command (type "help" for a list of commands):
 ```
 
+**UPDATE March 25th, 2023**: You can now run the game in Docker! To run the game in an interactive Docker environment, run the following commands in the root directory of the game.
+
+```
+PS C:\jDungeonCrawler> docker build -t dantruong/jdungeoncrawler .
+...
+PS C:\jDungeonCrawler> docker run -i -t dantruong/jdungeoncrawler
+```
+
 ### Commands
 
 Commands are case-sensitive
