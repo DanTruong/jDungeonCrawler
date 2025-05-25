@@ -59,16 +59,16 @@ public class GameWorld extends DefaultHandler {
      * @param description Description of the Entity.
      */
     private void createEntity(String qName, String name, String description) {
-        LivingEntity entity = null;
+        Entity entity = null;
         switch (qName) {
             case "PlayerCharacter" -> {
-                entity = new PlayerCharacter(name, description);
-                player = (PlayerCharacter) entity;
+                entity = new Player(name, description);
+                player = (Player) entity;
             }
             case "AdversarialCharacter" ->
-                entity = new AdversarialCharacter(name, description);
+                entity = new Enemy(name, description);
             default ->
-                entity = new NonPlayableCharacter(name, description);
+                entity = new NPC(name, description);
         }
         sector.addEntity(entity);
         entity.setCurrentSector(sector);
@@ -124,7 +124,7 @@ public class GameWorld extends DefaultHandler {
      *
      * @return The player character object.
      */
-    public PlayerCharacter getPlayer() {
+    public Player getPlayer() {
         return player;
     }
 
@@ -136,7 +136,7 @@ public class GameWorld extends DefaultHandler {
     /**
      * Player character being created for the game session.
      */
-    private PlayerCharacter player;
+    private Player player;
 
     /**
      * The current Sector being created.

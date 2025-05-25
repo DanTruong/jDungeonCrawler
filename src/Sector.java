@@ -67,7 +67,7 @@ public class Sector {
                 qsHigh--;
             }
             if (qsLow <= qsHigh) {
-                LivingEntity temp = populationList.get(qsLow);
+                Entity temp = populationList.get(qsLow);
                 populationList.set(qsLow, populationList.get(qsHigh));
                 populationList.set(qsHigh, temp);
                 qsLow++;
@@ -88,7 +88,7 @@ public class Sector {
      * @param name Name of the Entity to search for
      * @return Entity in the population array.
      */
-    public LivingEntity getEntity(String name) {
+    public Entity getEntity(String name) {
         int low = 0, high = populationList.size() - 1;
         while (high - low > 1) {
             int middle = (high + low) / 2;
@@ -112,7 +112,7 @@ public class Sector {
      *
      * @param le Entity object being added to the Sector.
      */
-    public void addEntity(LivingEntity le) {
+    public void addEntity(Entity le) {
         if (populationList.size() <= 10) {
             populationList.add(le);
             sortPopulation(0, populationList.size() - 1);
@@ -124,7 +124,7 @@ public class Sector {
      *
      * @param le Entity to remove from the Sector.
      */
-    public void removeEntity(LivingEntity le) {
+    public void removeEntity(Entity le) {
         populationList.remove(le);
     }
 
@@ -257,7 +257,7 @@ public class Sector {
     /**
      * ArrayList to hold Entity objects in the Sector.
      */
-    private ArrayList<LivingEntity> populationList;
+    private ArrayList<Entity> populationList;
 
     /**
      * String names of the neighboring Sectors.
