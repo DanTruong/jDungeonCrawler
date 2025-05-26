@@ -1,0 +1,170 @@
+{
+    "gameWorld": {
+      "entities": {
+        "npc": [
+          { "id": "human-1", "name": "Brittany", "description": "Likes to watch football on the TV." },
+          { "id": "human-2", "name": "Steve", "description": "Enjoys watching action films in the player's living room." },
+          { "id": "human-3", "name": "Marissa", "description": "Likes to setup card games in the dining room." },
+          { "id": "cat-1", "name": "Whiskers", "description": "The player's timid cat." },
+          { "id": "dog-1", "name": "Spot", "description": "The player's joyful dog." }
+        ],
+        "enemy": [
+          { "id": "house-fly", "name": "House Fly", "description": "An annoying fly that likes to buzz around pungent areas." },
+          { "id": "wasp", "name": "Wasp", "description": "Dangerous insect whose sting can hurt." },
+          { "id": "rat", "name": "Rat", "description": "An annoying rat that likes to get into crevices and scurry around." }
+        ],
+        "player": [
+          { "id": "player-1", "name": "Danny", "description": "The owner of this awesome house." }
+        ]
+      },
+      "sectors": [
+        {
+          "id": "living-room",
+          "name": "Living Room",
+          "description": "Where you can watch TV and relax.",
+          "state": "warm",
+          "exits": [
+            { "direction": "north", "target": "main-bdrm" },
+            { "direction": "south", "target": "front-porch" },
+            { "direction": "east", "target": "kitchen" },
+            { "direction": "west", "target": "hallway" }
+          ],
+          "occupants": [
+            { "type": "npc", "ref": "human-1" },
+            { "type": "npc", "ref": "human-2" }
+          ]
+        },
+        {
+          "id": "main-bdrm",
+          "name": "Main Bedroom",
+          "description": "Where the main homeowner sleeps.",
+          "state": "cool",
+          "exits": [
+            { "direction": "south", "target": "living-room" },
+            { "direction": "east", "target": "main-bthrm" }
+          ],
+          "occupants": [
+            { "type": "enemy", "ref": "house-fly" }
+          ]
+        },
+        {
+          "id": "jr-bdrm-1",
+          "name": "Junior Bedroom 1",
+          "description": "A bedroom for either a kid or a guest.",
+          "state": "cold",
+          "exits": [
+            { "direction": "south", "target": "hallway" }
+          ],
+          "occupants": []
+        },
+        {
+          "id": "jr-bdrm-2",
+          "name": "Junior Bedroom 2",
+          "description": "Another place for kids or guests to sleep.",
+          "state": "cold",
+          "exits": [
+            { "direction": "east", "target": "hallway" }
+          ],
+          "occupants": []
+        },
+        {
+          "id": "hallway",
+          "name": "Hallway",
+          "description": "A connecting corridor between the bathrooms and bedrooms.",
+          "state": "cool",
+          "exits": [
+            { "direction": "north", "target": "jr-bdrm-1" },
+            { "direction": "south", "target": "half-bthrm" },
+            { "direction": "east", "target": "living-room" },
+            { "direction": "west", "target": "jr-bdrm-2" }
+          ],
+          "occupants": [
+            { "type": "npc", "ref": "cat-1" }
+          ]
+        },
+        {
+          "id": "kitchen",
+          "name": "Kitchen",
+          "description": "Where food is prepared and stored.",
+          "state": "hot",
+          "exits": [
+            { "direction": "south", "target": "dining-room" },
+            { "direction": "east", "target": "garage" },
+            { "direction": "west", "target": "living-room" }
+          ],
+          "occupants": [
+            { "type": "enemy", "ref": "house-fly" }
+          ]
+        },
+        {
+          "id": "dining-room",
+          "name": "Dining Room",
+          "description": "Where food is eaten and guests are entertained.",
+          "state": "hot",
+          "exits": [
+            { "direction": "north", "target": "kitchen" }
+          ],
+          "occupants": [
+            { "type": "npc", "ref": "human-3" }
+          ]
+        },
+        {
+          "id": "main-bthrm",
+          "name": "Main Bathroom",
+          "description": "The bathroom attached to the main bedroom.",
+          "state": "warm",
+          "exits": [
+            { "direction": "west", "target": "main-bdrm" }
+          ],
+          "occupants": [
+            { "type": "npc", "ref": "dog-1" }
+          ]
+        },
+        {
+          "id": "half-bthrm",
+          "name": "Half Bathroom",
+          "description": "Located in the hallway; only contains a toilet and sink.",
+          "state": "warm",
+          "exits": [
+            { "direction": "north", "target": "hallway" }
+          ],
+          "occupants": [
+            { "type": "enemy", "ref": "house-fly" },
+            { "type": "enemy", "ref": "house-fly" },
+            { "type": "enemy", "ref": "house-fly" },
+            { "type": "enemy", "ref": "house-fly" },
+            { "type": "enemy", "ref": "house-fly" },
+            { "type": "enemy", "ref": "house-fly" },
+            { "type": "player", "ref": "player-1" }
+          ]
+        },
+        {
+          "id": "front-porch",
+          "name": "Front Porch",
+          "description": "The entrance to the house.",
+          "state": "hot",
+          "exits": [
+            { "direction": "north", "target": "living-room" }
+          ],
+          "occupants": [
+            { "type": "enemy", "ref": "wasp" }
+          ]
+        },
+        {
+          "id": "garage",
+          "name": "Garage",
+          "description": "Where vehicles and tools are stored.",
+          "state": "hot",
+          "exits": [
+            { "direction": "west", "target": "kitchen" }
+          ],
+          "occupants": [
+            { "type": "enemy", "ref": "rat" },
+            { "type": "enemy", "ref": "rat" },
+            { "type": "enemy", "ref": "rat" }
+          ]
+        }
+      ]
+    }
+  }
+  
