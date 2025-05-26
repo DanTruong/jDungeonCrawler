@@ -1,26 +1,26 @@
-# jDungeonCrawler
+# jayDungeon
 Dan Truong  
 March 11th, 2023
 
-jDungeonCrawler is a text adventure game engine written in Java (much in the vein of Zork). It takes in user input and parses text response to the player.
+jayDungeon (formerly jDungeonCrawler) is a text adventure game engine written in Java (much in the vein of Zork). It takes in user input and parses text response to the player.
 
 ### Running the game
 
 At this time, a GUI client is yet to be developed for the game. To run this
-game, execute the Java executable (**\jDungeonCrawler\dist\jDungeonCrawler.jar**) from a terminal/command line environment. Ensure that the game.xml file is in the same directory as the JAR file.
+game, execute the Java executable (**\jayDungeon\dist\jayDungeon.jar**) from a terminal/command line environment. Ensure that the game.xml file is in the same directory as the JAR file.
 Below is an example running in a Windows PowerShell environment:
 
 ```
-PS C:\jDungeonCrawler\dist> java -jar ".\jDungeonCrawler.jar"
+PS C:\jayDungeon\dist> java -jar ".\jayDungeon.jar"
 Enter a command (type "help" for a list of commands):
 ```
 
 **UPDATE March 25th, 2023**: You can now run the game in Docker! To run the game in an interactive Docker environment, run the following commands in the root directory of the game.
 
 ```
-PS C:\jDungeonCrawler> docker build -t dantruong/jdungeoncrawler .
+PS C:\jayDungeon> docker build -t dantruong/jaydungeon .
 ...
-PS C:\jDungeonCrawler> docker run -i -t dantruong/jdungeoncrawler
+PS C:\jayDungeon> docker run -i -t dantruong/jaydungeon
 ```
 
 ### Commands
