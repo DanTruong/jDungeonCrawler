@@ -61,11 +61,11 @@ public class GameWorld extends DefaultHandler {
     private void createEntity(String qName, String name, String description) {
         Entity entity = null;
         switch (qName) {
-            case "PlayerCharacter" -> {
+            case "Player" -> {
                 entity = new Player(name, description);
                 player = (Player) entity;
             }
-            case "AdversarialCharacter" ->
+            case "Enemy" ->
                 entity = new Enemy(name, description);
             default ->
                 entity = new NPC(name, description);
@@ -112,7 +112,7 @@ public class GameWorld extends DefaultHandler {
                             attr.getValue("south"),
                             attr.getValue("west")
                         });
-            case "AdversarialCharacter", "NonPlayableCharacter", "PlayerCharacter" ->
+            case "Enemy", "NPC", "Player" ->
                 createEntity(qName,
                         attr.getValue("name"),
                         attr.getValue("description"));

@@ -1,41 +1,128 @@
 <xml version="1.0" encoding="UTF-8">
-	<Sector name="Living Room" description="where you can watch TV and relax" state="warm" north="Master Bedroom" south="Front Porch" east="Kitchen" west="Hallway">
-		<NonPlayableCharacter name="Brittany" description="Likes to watch football on the TV." />
-		<NonPlayableCharacter name="Steve" description="Enjoys watching action films in the player's living room." />
+	<Sector id="living-room" 
+			name="Living Room" 
+			description="where you can watch TV and relax" 
+			state="warm" 
+			north="main-bdrm" 
+			south="front-porch" 
+			east="kitchen" 
+			west="hallway">
+		<NPC id="human-1" 
+			 name="Brittany" 
+			 description="Likes to watch football on the TV." />
+		<NPC id="human-2" 
+			 name="Steve" 
+			 description="Enjoys watching action films in the player's living room." />
 	</Sector>
-	<Sector name="Master Bedroom" description="where the main homeowner sleeps" state="cool" south="Living Room" east="Main Bathroom">
-		<AdversarialCharacter name="House Fly #5" description="An annoying fly that likes to buzz around pungent areas." />
+	<Sector id="main-bdrm" 
+			name="Main Bedroom" 
+			description="where the main homeowner sleeps" 
+			state="cool" 
+			south="living-room" 
+			east="main-bthrm">
+		<Enemy id="house-fly-5" 
+			   name="House Fly #5" 
+			   description="An annoying fly that likes to buzz around pungent areas." />
 	</Sector>
-	<Sector name="Junior Bedroom 1" description="a bedroom for either a kid or a guest" state="cold" south="Hallway"></Sector>
-	<Sector name="Junior Bedroom 2" description="another place for kids or guests to sleep" state="cold" east="Hallway"></Sector>
-	<Sector name="Hallway" description="a connecting corridor between the bathrooms and bedrooms" state="cool" north="Junior Bedroom 1" south="Small Bathroom" east="Living Room" west="Junior Bedroom 2">
-		<NonPlayableCharacter name="Whiskers" description="The player's timid cat." />
+	<Sector id="jr-bdrm-1" 
+			name="Junior Bedroom 1" 
+			description="a bedroom for either a kid or a guest" 
+			state="cold" 
+			south="hallway">
 	</Sector>
-	<Sector name="Kitchen" description="where food is prepared and stored" state="hot" south="Dining Room" east="Garage" west="Living Room">
-		
-		<AdversarialCharacter name="House Fly #6" description="An annoying fly that likes to buzz around pungent areas." />
+	<Sector id="jr-bdrm-2" 
+			name="Junior Bedroom 2" 
+			description="another place for kids or guests to sleep" 
+			state="cold" 
+			east="hallway">
 	</Sector>
-	<Sector name="Dining Room" description="where food is eaten and guests are entertained" state="hot" north="Kitchen">
-		<NonPlayableCharacter name="Marissa" description="Likes to setup card games in the dining room." />
+	<Sector id="hallway" 
+			name="Hallway" 
+			description="a connecting corridor between the bathrooms and bedrooms" 
+			state="cool" 
+			north="jr-bdrm-1" 
+			south="half-bthrm" 
+			east="living-room"
+			west="jr-bdrm-2">
+		<NPC id="cat-1" 
+			 name="Whiskers" 
+			 description="The player's timid cat." />
 	</Sector>
-	<Sector name="Main Bathroom" description="the bathroom attached to the main bedroom" state="warm" west="Master Bedroom">
-		<NonPlayableCharacter name="Spot" description="The player's joyful dog." />
+	<Sector id="kitchen" 
+			name="Kitchen" 
+			description="where food is prepared and stored" 
+			state="hot" 
+			south="dining-room" 
+			east="garage" 
+			west="living-room">
+		<Enemy id="house-fly-6" 
+			   name="House Fly #6" 
+			   description="An annoying fly that likes to buzz around pungent areas." />
 	</Sector>
-	<Sector name="Small Bathroom" description="the bathroom located in the hallway" state="warm" north="Hallway">
-		<AdversarialCharacter name="House Fly #3" description="An annoying fly that likes to buzz around pungent areas." />
-		<AdversarialCharacter name="House Fly #1" description="An annoying fly that likes to buzz around pungent areas." />
-		<AdversarialCharacter name="House Fly #6" description="An annoying fly that likes to buzz around pungent areas." />
-		<AdversarialCharacter name="House Fly #2" description="An annoying fly that likes to buzz around pungent areas." />
-		<PlayerCharacter name="Danny" description="The owner of this awesome house." />
-		<AdversarialCharacter name="House Fly #4" description="An annoying fly that likes to buzz around pungent areas." />
-		<AdversarialCharacter name="House Fly #5" description="An annoying fly that likes to buzz around pungent areas." />
+	<Sector id="dining-room" 
+			name="Dining Room" 
+			description="where food is eaten and guests are entertained" 
+			state="hot" 
+			north="kitchen">
+		<NPC id="human-3" 
+			 name="Marissa" 
+			 description="Likes to setup card games in the dining room." />
 	</Sector>
-	<Sector name="Front Porch" description="the entrance to the house" state="hot" north="Living Room">
-		<AdversarialCharacter name="Wasp" description="Dangerous insect whose sting can hurt." />
+	<Sector id="main-bthrm" 
+			name="Main Bathroom" 
+			description="the bathroom attached to the main bedroom" 
+			state="warm" 
+			west="main-bdrm">
+		<NPC id="dog-1" 
+			 name="Spot" 
+			 description="The player's joyful dog." />
 	</Sector>
-	<Sector name="Garage" description="the area where vehicles and tools are stored" state="hot" west="Kitchen">
-		<AdversarialCharacter name="Rat #1" description="An annoying rat that likes to get into crevices scurry around." />
-		<AdversarialCharacter name="Rat #2" description="An annoying rat that likes to get into crevices scurry around." />
-		<AdversarialCharacter name="Rat #3" description="An annoying rat that likes to get into crevices scurry around." />
+	<Sector id="half-bthrm" 
+			name="Half Bathroom" 
+			description="the bathroom located in the hallway and only contains toilet and sink" 
+			state="warm" 
+			north="hallway">
+		<Enemy id="house-fly-3" 
+			   name="House Fly #3" 
+			   description="An annoying fly that likes to buzz around pungent areas." />
+		<Enemy id="house-fly-1" 
+			   name="House Fly #1" 
+			   description="An annoying fly that likes to buzz around pungent areas." />
+		<Enemy id="house-fly-2" 
+			   name="House Fly #2" 
+			   description="An annoying fly that likes to buzz around pungent areas." />
+		<Player id="player-1" 
+				name="Danny" 
+				description="The owner of this awesome house." />
+		<Enemy id="house-fly-7" 
+			   name="House Fly #7" 
+			   description="An annoying fly that likes to buzz around pungent areas." />
+		<Enemy id="house-fly-4" 
+			   name="House Fly #4" 
+			   description="An annoying fly that likes to buzz around pungent areas." />
+	</Sector>
+	<Sector id="front-porch" 
+			name="Front Porch" 
+			description="the entrance to the house" 
+			state="hot" 
+			north="living-room">
+		<Enemy id="wasp" 
+			   name="Wasp" 
+			   description="Dangerous insect whose sting can hurt." />
+	</Sector>
+	<Sector id="garage" 
+			name="Garage" 
+			description="the area where vehicles and tools are stored" 
+			state="hot" 
+			west="kitchen">
+		<Enemy id="rat-1" 
+			   name="Rat #1" 
+			   description="An annoying rat that likes to get into crevices scurry around." />
+		<Enemy id="rat-2" 
+		       name="Rat #2" 
+			   description="An annoying rat that likes to get into crevices scurry around." />
+		<Enemy id="rat-3" 
+		       name="Rat #3" 
+			   description="An annoying rat that likes to get into crevices scurry around." />
 	</Sector>
 </xml>
