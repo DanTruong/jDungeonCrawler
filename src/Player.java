@@ -23,13 +23,13 @@
  * THE SOFTWARE.
  */
 /**
- * Child class of LivingEntity. Used for handling Playable Character objects.
+ * Child class of Entity. Used for handling Playable Character objects.
  *
  * @author Dan Truong
  */
 import java.util.Scanner;
 
-public class PlayerCharacter extends LivingEntity {
+public class Player extends Entity {
 
     /**
      * Constructor for Player Character object.
@@ -37,7 +37,7 @@ public class PlayerCharacter extends LivingEntity {
      * @param name Name to give to the Player.
      * @param description Description of the Player.
      */
-    public PlayerCharacter(String name, String description) {
+    public Player(String name, String description) {
         super(name, description);
         health = 20;
     }

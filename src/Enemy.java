@@ -23,21 +23,21 @@
  */
 
 /**
- * Child class of LivingEntity. Used for handling Non Playable Character
- * objects. Think of this class as an Entity that can assist the player or
- * forward the plot.
+ * Child class of Entity. Used for handling Adversarial Character
+ * objects. Think of this class as an Entity that is supposed to be opposing
+ * the player in terms of gameplay.
  *
  * @author Dan Truong
  */
-public class NonPlayableCharacter extends LivingEntity {
+public class Enemy extends Entity {
 
     /**
-     * Constructor for Non Playable Character object.
+     * Constructor for the Adversarial Character object.
      *
-     * @param name Name given to the Non Playable Character object.
-     * @param description Description of the Non Playable Character.
+     * @param name Name given to the Adversarial Character object.
+     * @param description Description of the Adversarial Character.
      */
-    public NonPlayableCharacter(String name, String description) {
+    public Enemy(String name, String description) {
         super(name, description);
     }
 
@@ -48,7 +48,7 @@ public class NonPlayableCharacter extends LivingEntity {
      */
     @Override
     public void react(String action) {
-        if (action.equals("warming")) {
+        if (action.equals("cooling")) {
             getCurrentSector().getGameWorld().getPlayer().decreaseHealth();
             attemptMove();
         } else {

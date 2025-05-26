@@ -27,7 +27,7 @@
  *
  * @author Dan Truong
  */
-public abstract class LivingEntity {
+public abstract class Entity {
 
     /**
      * Creates new Entity object and gives it a name and description.
@@ -35,7 +35,7 @@ public abstract class LivingEntity {
      * @param name String to identify the Entity.
      * @param description Description to give to the Entity.
      */
-    public LivingEntity(String name, String description) {
+    public Entity(String name, String description) {
         this.name = name;
         this.description = description;
     }
